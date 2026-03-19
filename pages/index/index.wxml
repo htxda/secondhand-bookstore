@@ -1,0 +1,198 @@
+<!-- index.wxml -->
+<view class="container">
+  <!-- 背景图片 -->
+  <image style="height: 1289rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx" src="/images/books/9fbfb5d427ab78208ac16cb55ef74856.jpg" class="background-image" mode="widthFix" />
+  
+  <!-- Hero Section -->
+  <view class="hero-section" style="position: relative; left: -22rpx; top: -1rpx">
+
+    <!-- Large Bold Title -->
+    <view class="title-section">
+      <text class="main-title" style="position: relative; left: -1rpx; top: 0rpx">CAMPUS</text>
+      <text class="main-title">BOOK SWAP</text>
+      <text class="sub-title">二手教材交易平台</text>
+    </view>
+
+    <!-- Search Bar - Candy Style -->
+    <view class="search-bar" style="position: relative; left: 1rpx; top: -11rpx">
+      <text class="search-icon">🔍</text>
+      <input style="position: relative; left: 0rpx; top: 65rpx; height: 60rpx; display: block; box-sizing: border-box; width: 539rpx"
+        placeholder="搜索书名、作者、科目..."
+        class="search-input"
+        value="{{searchKeyword}}"
+        bindinput="searchInput"
+        bindconfirm="onSearchConfirm"
+        confirm-type="search"
+      />
+      <view class="search-button" bindtap="onSearchConfirm">
+        <image style="width: 185rpx; height: 191rpx; display: block; box-sizing: border-box; position: relative; left: -1rpx; top: -2rpx" src="/images/sousuo.png" class="search-button-image" mode="aspectFit" />
+      </view>
+    </view>
+
+    <!-- Quick Actions -->
+    <view class="quick-actions" style="position: relative; left: 1rpx; top: 63rpx">
+      <view class="action-button browse-button" bindtap="browseBooks" style="height: 142rpx; display: flex; box-sizing: border-box; position: relative; left: -23rpx; top: 69rpx">
+        <view class="action-text">
+          <text class="action-title">浏览</text>
+          <text class="action-title">书籍</text>
+        </view>
+        <view class="action-emoji-box">
+          <text class="action-emoji" style="position: relative; left: 14rpx; top: -1rpx">📚</text>
+        </view>
+      </view>
+      <view class="action-button publish-button" bindtap="publishBook" style="height: 142rpx; display: flex; box-sizing: border-box; position: relative; left: 20rpx; top: 71rpx">
+        <view class="action-text">
+          <text class="action-title">上架</text>
+          <text class="action-title">书籍</text>
+        </view>
+        <view class="action-emoji-box">
+          <text class="action-emoji">📖</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Category Grid -->
+  <view class="category-section">
+    <view class="category-container" style="position: relative; left: -5rpx; top: 12rpx">
+      <text class="section-title">分类浏览</text>
+      <view class="category-grid">
+        <view wx:for="{{categories}}" wx:key="id" class="category-item" data-id="{{item.id}}" bindtap="categoryTap" style="height: 117rpx; display: flex; box-sizing: border-box; position: relative; left: -9rpx; top: 60rpx">
+          <view class="category-icon" style="background-color: {{item.color === 'bg-blue-100' ? '#EBF5FF' : item.color === 'bg-green-100' ? '#ECFDF5' : item.color === 'bg-purple-100' ? '#F3E8FF' : item.color === 'bg-yellow-100' ? '#FEF3C7' : item.color === 'bg-pink-100' ? '#FCE7F3' : item.color === 'bg-orange-100' ? '#FFF3E0' : item.color === 'bg-red-100' ? '#FEE2E2' : '#F3F4F6'}}; position: relative; left: -19rpx; top: 62rpx">
+            <text class="category-emoji" style="position: relative; left: -33rpx; top: 53rpx">{{item.emoji}}</text>
+          </view>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Featured Books Section -->
+  <view class="featured-section">
+    <view class="section-header">
+      <text class="section-title">推荐书籍</text>
+      <view class="view-more" bindtap="viewMoreBooks">
+        <text class="view-more-text">查看更多 →</text>
+      </view>
+    </view>
+    <view class="books-container">
+      <view wx:for="{{featuredBooks}}" wx:key="_id" class="book-item" data-id="{{item._id}}" bindtap="bookTap">
+        <image src="{{imageUrls[index % imageUrls.length]}}" mode="aspectFill" class="book-image" />
+        <view class="book-info">
+          <view>
+            <text class="book-title">{{item.title}}</text>
+            <text class="book-author">{{item.author}}</text>
+            <view class="book-tags">
+              <text class="tag condition-tag">{{item.condition}}</text>
+              <text class="tag category-tag">{{item.category}}</text>
+            </view>
+          </view>
+          <view class="book-price">
+            <view class="price-info">
+              <text class="current-price">¥{{item.price}}</text>
+              <text class="original-price">¥{{item.originalPrice}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 内容区域容器 -->
+  <view class="content-container" style="position: relative; left: -5rpx; top: 68rpx; width: 714rpx; display: block; box-sizing: border-box">
+    <!-- 四个角的图片 -->
+    <image style="position: absolute; left: -7rpx; top: 704rpx" src="/images/books/icon_s31ujvm56je/biankuang.png" class="corner-image corner-top-left" />
+    <image src="/images/books/icon_s31ujvm56je/biankuang_1.png" class="corner-image corner-top-right" />
+    <image style="position: absolute; left: 648rpx; top: 703rpx" src="/images/books/icon_s31ujvm56je/biankuang_2.png" class="corner-image corner-bottom-left" />
+    <image style="position: absolute; left: -13rpx; top: -7rpx; width: 60rpx; height: 60rpx; display: block; box-sizing: border-box" src="/images/books/icon_s31ujvm56je/arrow-right-bottom.png" class="corner-image corner-bottom-right" />
+    <!-- 推荐书籍卡片 -->
+    <view class="featured-books-section">
+      <view class="section-header">
+        <text class="section-title">新书推荐</text>
+      </view>
+      <view class="books-grid" style="position: relative; left: -1rpx; top: 56rpx">
+        <view class="book-card" bindtap="viewMoreBooks">
+          <view class="book-card-content">
+            <text class="book-card-title">线性代数</text>
+            <text class="book-card-author">北京大学出版社</text>
+            <text class="book-card-price">¥20.00</text>
+          </view>
+        </view>
+        <view class="book-card" bindtap="viewMoreBooks">
+          <view class="book-card-content">
+            <text class="book-card-title">大学物理</text>
+            <text class="book-card-author">高等教育出版社</text>
+            <text class="book-card-price">¥35.00</text>
+          </view>
+        </view>
+        <view class="book-card" bindtap="viewMoreBooks">
+          <view class="book-card-content">
+            <text class="book-card-title">数据结构</text>
+            <text class="book-card-author">人民邮电出版社</text>
+            <text class="book-card-price">¥40.00</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 活动区域 - 横向滚动 -->
+    <view class="activity-zone-section">
+      <view class="section-header">
+        <text class="section-title">活动专区</text>
+      </view>
+      <scroll-view scroll-x="true" class="activity-scroll-view" style="position: relative; left: -1rpx; top: 65rpx">
+        <view class="activity-scroll-content">
+          <view class="activity-card-horizontal" bindtap="viewMoreBooks" style="position: relative; left: -5rpx; top: 1rpx">
+            <view class="activity-card-content-horizontal">
+              <text class="activity-card-title-horizontal">开学季活动</text>
+              <text class="activity-card-subtitle-horizontal">新生购书满50减10</text>
+            </view>
+          </view>
+          <view class="activity-card-horizontal" bindtap="viewMoreBooks" style="position: relative; left: -5rpx; top: 1rpx">
+            <view class="activity-card-content-horizontal">
+              <text class="activity-card-title-horizontal">限时折扣</text>
+              <text class="activity-card-subtitle-horizontal">部分教材低至5折</text>
+            </view>
+          </view>
+          <view class="activity-card-horizontal" bindtap="viewMoreBooks">
+            <view class="activity-card-content-horizontal">
+              <text class="activity-card-title-horizontal">二手书回收</text>
+              <text class="activity-card-subtitle-horizontal">旧书换积分</text>
+            </view>
+          </view>
+          <view class="activity-card-horizontal" bindtap="viewMoreBooks">
+            <view class="activity-card-content-horizontal">
+              <text class="activity-card-title-horizontal">会员专享</text>
+              <text class="activity-card-subtitle-horizontal">会员购书额外9折</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 活动卡片 -->
+    <view class="activity-card" bindtap="viewMoreBooks" style="position: relative; left: -2rpx; top: 54rpx">
+      <view class="activity-card-content">
+        <text class="activity-card-title">开学季活动</text>
+        <text class="activity-card-subtitle">新生购书满50减10</text>
+        <text class="activity-card-action">了解详情</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Shopping Cart Floating Button -->
+  <view
+    class="cart-floating-button"
+    bindtap="goToCart"
+    bindtouchstart="touchStart"
+    bindtouchmove="touchMove"
+    bindtouchend="touchEnd"
+    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
+  >
+    <text class="cart-icon">🛒</text>
+    <text class="cart-badge">2</text>
+  </view>
+</view>
+
+<!-- 底部自定义导航栏 -->
+<custom-tab-bar></custom-tab-bar>

@@ -1,0 +1,78 @@
+<view class="container">
+  <!-- 粉色渐变色标题栏 -->
+  <view class="custom-navbar">
+    <view class="navbar-content">
+      <text class="navbar-title" style="position: relative; left: 0rpx; top: 23rpx">个人中心</text>
+    </view>
+  </view>
+  <!-- User Profile Section -->
+  <view class="profile-section" style="position: relative; left: 0rpx; top: 0rpx; height: 368rpx; display: block; box-sizing: border-box">
+    <view class="user-info" bindtap="updateUserInfo">
+      <image src="{{user.avatar}}" mode="aspectFill" class="user-avatar" />
+      <view class="user-details">
+        <text class="user-name">{{user.name}}</text>
+        <view class="user-rating">
+          <text class="star">⭐</text>
+          <text class="rating-value">{{user.rating}}</text>
+        </view>
+      </view>
+      <text class="edit-icon" style="position: absolute; left: 653rpx; top: 47rpx">✎</text>
+    </view>
+    <view class="user-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{user.booksSold}}</text>
+        <text class="stat-label">已卖出</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{user.booksBought}}</text>
+        <text class="stat-label">已买到</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Menu Section -->
+  <view class="menu-section" style="position: relative; left: 2rpx; top: 2rpx">
+    <view class="menu-grid">
+      <view wx:for="{{menuItems}}" wx:key="id" class="menu-item" data-id="{{item.id}}" bindtap="menuItemTap">
+        <text class="menu-icon">{{item.icon}}</text>
+        <text class="menu-title">{{item.title}}</text>
+        <text class="menu-count">{{item.count}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Settings Section -->
+  <view class="settings-section" style="position: relative; left: 2rpx; top: 13rpx">
+    <view wx:for="{{settingsItems}}" wx:key="id" class="setting-item" data-id="{{item.id}}" bindtap="settingItemTap">
+      <view class="setting-info">
+        <text class="setting-icon">{{item.icon}}</text>
+        <text class="setting-title">{{item.title}}</text>
+      </view>
+      <text class="setting-arrow">→</text>
+    </view>
+  </view>
+
+  <!-- Logout Button -->
+  <view class="logout-section">
+    <view wx:if="{{!isLoggedIn}}" class="logout-button" bindtap="login">
+      <text class="logout-text">微信一键登录</text>
+    </view>
+    <view wx:else class="logout-button logout-button-exit" bindtap="logout" style="position: relative; left: -1rpx; top: 22rpx">
+      <text class="logout-text">退出登录</text>
+    </view>
+  </view>
+
+  <!-- Shopping Cart Floating Button -->
+  <view
+    class="cart-floating-button"
+    bindtap="goToCart"
+    bindtouchstart="touchStart"
+    bindtouchmove="touchMove"
+    bindtouchend="touchEnd"
+    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
+  >
+    <text class="cart-icon">🛒</text>
+    <text class="cart-badge">{{cartCount || 0}}</text>
+  </view>
+</view>

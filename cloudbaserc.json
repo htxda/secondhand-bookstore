@@ -1,0 +1,38 @@
+{
+  "envId": "cloud1-4gs0hrcj33e136f8",
+  "functionRoot": "./cloudfunctions",
+  "functions": [
+    {
+      "name": "login",
+      "description": "用户登录云函数"
+    },
+    {
+      "name": "updateUserInfo",
+      "description": "更新用户信息云函数"
+    },
+    {
+      "name": "cart",
+      "description": "购物车管理云函数"
+    },
+    {
+      "name": "order",
+      "description": "订单管理云函数"
+    },
+    {
+      "name": "favorite",
+      "description": "收藏管理云函数"
+    },
+    {
+      "name": "book",
+      "description": "书籍管理云函数"
+    }
+  ],
+  "ai": {
+    "defaultAgent": "{{env.AI_DEFAULT_AGENT}}",
+    "agents": {
+      "codebuddy": {
+        "type": "none"
+      }
+    }
+  }
+}

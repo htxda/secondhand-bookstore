@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="test-card">
+    <text class="title">数据库测试</text>
+    <text class="result">{{testResult}}</text>
+    <button bindtap="testDatabase" class="test-button">重新测试</button>
+  </view>
+</view>

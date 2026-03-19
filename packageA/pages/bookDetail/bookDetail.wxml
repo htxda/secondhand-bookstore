@@ -1,0 +1,106 @@
+<!-- bookDetail.wxml -->
+<view class="container">
+  <!-- 粉色渐变色标题栏 -->
+  <view class="custom-navbar">
+    <view class="navbar-content">
+      <text class="navbar-title">书籍详情</text>
+    </view>
+  </view>
+  <!-- Header with Back Button -->
+  <view class="header">
+    <view class="back-button" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="header-actions">
+      <view class="action-button" bindtap="favoriteBook">
+        <text class="action-icon">❤️</text>
+      </view>
+      <view class="action-button" bindtap="shareBook">
+        <text class="action-icon">📤</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Book Images -->
+  <view class="images-section">
+    <image src="{{imageUrls[currentImageIndex]}}" mode="aspectFill" class="main-image" />
+    <view class="image-thumbs">
+      <view 
+        wx:for="{{imageUrls}}" 
+        wx:key="index" 
+        class="thumb-item {{currentImageIndex === index ? 'active' : ''}}"
+        data-index="{{index}}"
+        bindtap="switchImage"
+      >
+        <image src="{{item}}" mode="aspectFill" class="thumb-image" />
+      </view>
+    </view>
+  </view>
+
+  <!-- Book Info -->
+  <view class="info-section">
+    <view class="price-info">
+      <text class="current-price">¥{{book.price}}</text>
+      <text class="original-price">¥{{book.originalPrice}}</text>
+    </view>
+    <text class="book-title">{{book.title}}</text>
+    <text class="book-author">{{book.author}}</text>
+    <view class="book-tags">
+      <text class="tag condition-tag">{{book.condition}}</text>
+      <text class="tag category-tag">{{book.category}}</text>
+    </view>
+    <view class="book-meta">
+      <text class="meta-item">出版社: {{book.publisher}}</text>
+      <text class="meta-item">出版时间: {{book.publishDate}}</text>
+    </view>
+  </view>
+
+  <!-- Seller Info (Mock) -->
+  <view class="seller-section">
+    <view class="seller-info">
+      <image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200" mode="aspectFill" class="seller-avatar" />
+      <view class="seller-details">
+        <text class="seller-name">书友_{{_openid ? _openid.substring(0, 6) : '001'}}</text>
+        <view class="seller-rating">
+          <text class="star">⭐</text>
+          <text class="rating-value">4.8</text>
+          <text class="books-sold">(已售 12 本)</text>
+        </view>
+      </view>
+      <view class="contact-button" bindtap="contactSeller">
+        <text class="contact-text">联系卖家</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Book Description -->
+  <view class="description-section">
+    <text class="section-title">书籍描述</text>
+    <text class="description">{{book.description}}</text>
+  </view>
+
+  <!-- Action Buttons -->
+  <view class="action-section">
+    <view class="action-buttons">
+      <view class="secondary-button" bindtap="addToCart">
+        <text class="button-text">加入购物车</text>
+      </view>
+      <view class="primary-button" bindtap="contactSeller">
+        <text class="button-text">立即购买</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Shopping Cart Floating Button -->
+  <view
+    class="cart-floating-button"
+    bindtap="goToCart"
+    bindtouchstart="touchStart"
+    bindtouchmove="touchMove"
+    bindtouchend="touchEnd"
+    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
+  >
+    <text class="cart-icon">🛒</text>
+    <text class="cart-badge">{{cartCount || 0}}</text>
+  </view>
+</view>

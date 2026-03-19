@@ -1,0 +1,20 @@
+<view class="tab-bar">
+  <view class="tab-bar-border"></view>
+  
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{item.text === '发布' ? 'special-wrapper' : ''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab" style="height: 100rpx; display: flex; box-sizing: border-box; left: 0rpx; top: -39rpx">
+    
+    <view wx:if="{{item.text === '发布'}}" class="special-item">
+      <view class="special-icon" style="position: relative; left: 0rpx; top: 15rpx">
+        <text class="scan-icon">〔 〕</text>
+      </view>
+    </view>
+
+    <block wx:else>
+      <view class="icon-box">
+        <text class="emoji-icon">{{index === 0 ? '🍰' : index === 1 ? '🍔' : index === 3 ? '🍡' : '🍮'}}</text>
+      </view>
+      <view class="tab-text" style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
+    </block>
+    
+  </view>
+</view>

@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/books/books",
+    "pages/publish/publish",
+    "pages/profile/profile",
+    "pages/cart/cart",
+    "pages/logs/logs"
+  ],
+  "subPackages": [
+    {
+      "root": "packageA",
+      "pages": [
+        "pages/bookDetail/bookDetail"
+      ]
+    },
+    {
+      "root": "packageB",
+      "pages": [
+        "pages/testDb/testDb"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFCDB2",
+    "navigationBarTitleText": "二手书商城",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#9ca3af",
+    "selectedColor": "#FF8FA3",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/books/books",
+        "text": "书籍"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "关注"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

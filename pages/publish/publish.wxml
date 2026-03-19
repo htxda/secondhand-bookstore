@@ -1,0 +1,94 @@
+<view class="container">
+  <!-- 粉色渐变色标题栏 -->
+  <view class="custom-navbar">
+    <view class="navbar-content">
+      <view class="back-button" bindtap="goBack" style="position: absolute; left: 24rpx; top: 50%; transform: translateY(-50%);">
+        <text class="back-icon" style="font-size: 36rpx; color: #ffffff; font-weight: bold;">←</text>
+      </view>
+      <text class="navbar-title">发布书籍</text>
+      <view class="header-placeholder" style="width: 36rpx;"></view>
+    </view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-container">
+    <view class="input-group">
+      <text class="label">书名 *</text>
+      <input class="input" placeholder="请输入书名" value="{{formData.title}}" bindinput="handleInput" data-name="title" />
+    </view>
+
+    <view class="input-group">
+      <text class="label">作者 *</text>
+      <input class="input" placeholder="请输入作者" value="{{formData.author}}" bindinput="handleInput" data-name="author" />
+    </view>
+
+    <view class="input-group">
+      <text class="label">售价 *</text>
+      <view class="price-input-container">
+        <text class="currency">¥</text>
+        <input class="price-input" placeholder="0.00" type="digit" value="{{formData.price}}" bindinput="handleInput" data-name="price" />
+      </view>
+    </view>
+
+    <view class="input-group">
+      <text class="label">原价</text>
+      <view class="price-input-container">
+        <text class="currency">¥</text>
+        <input class="price-input" placeholder="0.00" type="digit" value="{{formData.originalPrice}}" bindinput="handleInput" data-name="originalPrice" />
+      </view>
+    </view>
+
+    <view class="input-group">
+      <text class="label">分类 *</text>
+      <picker bindchange="selectSubject" value="{{formData.subjectIndex}}" range="{{subjects}}">
+        <view class="picker {{formData.subject ? 'selected' : 'placeholder'}}">
+          {{formData.subject || '请选择分类'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="input-group">
+      <text class="label">新旧程度 *</text>
+      <picker bindchange="selectCondition" value="{{formData.conditionIndex}}" range="{{conditions}}">
+        <view class="picker {{formData.condition ? 'selected' : 'placeholder'}}">
+          {{formData.condition || '请选择新旧程度'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="input-group">
+      <text class="label">描述</text>
+      <textarea class="textarea" placeholder="请输入书籍描述（可选）" value="{{formData.description}}" bindinput="handleInput" data-name="description" maxlength="200" />
+    </view>
+
+    <view class="input-group">
+      <text class="label">书籍图片 *</text>
+      <view class="image-upload">
+        <view wx:for="{{images}}" wx:key="index" class="image-item">
+          <image src="{{item.tempFilePath}}" mode="aspectFill" class="uploaded-image" />
+          <view class="delete-image" bindtap="deleteImage" data-index="{{index}}">×</view>
+        </view>
+        <view wx:if="{{images.length < 3}}" class="upload-button" bindtap="chooseImage">
+          <text class="upload-icon">+</text>
+          <text class="upload-text">上传图片</text>
+        </view>
+      </view>
+    </view>
+
+    <button class="submit-button" bindtap="submitForm" disabled="{{isSubmitting}}" style="position: relative; left: 4rpx; top: -45rpx">
+      {{isSubmitting ? '发布中...' : '发布'}}
+    </button>
+  </view>
+  <!-- Shopping Cart Floating Button -->
+  <view
+    class="cart-floating-button"
+    bindtap="goToCart"
+    bindtouchstart="touchStart"
+    bindtouchmove="touchMove"
+    bindtouchend="touchEnd"
+    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
+  >
+    <text class="cart-icon">🛒</text>
+    <text class="cart-badge">{{cartCount || 0}}</text>
+  </view>
+</view>

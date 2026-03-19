@@ -1,0 +1,91 @@
+<view class="container">
+  <!-- 粉色渐变色标题栏 -->
+  <view class="custom-navbar">
+    <view class="navbar-content">
+      
+      <text class="navbar-title" style="position: relative; left: -1rpx; top: 23rpx">购物车</text>
+      <view class="header-placeholder" style="width: 36rpx;"></view>
+    </view>
+  </view>
+
+  <!-- Cart Items -->
+  <view class="cart-section">
+    <!-- Empty Cart -->
+    <view wx:if="{{cartItems.length === 0}}" class="empty-cart" style="position: relative; left: -1rpx; top: -24rpx">
+      <text class="empty-icon">🛒</text>
+      <text class="empty-text">购物车为空</text>
+      <view class="empty-button" bindtap="goToBooks">
+        <text class="empty-button-text">去逛逛</text>
+      </view>
+    </view>
+
+    <!-- Cart Items List -->
+    <view wx:else class="cart-items">
+      <!-- Select All -->
+      <view class="select-all-row">
+        <view class="checkbox" bindtap="toggleSelectAll">
+          <text class="checkbox-icon">{{selectedAll ? '☑️' : '☐'}}</text>
+          <text class="select-all-text">全选</text>
+        </view>
+        <view wx:if="{{selectedIds.length > 0}}" class="batch-delete-button" bindtap="batchDelete">
+          <text class="batch-delete-text">删除 ({{selectedIds.length}})</text>
+        </view>
+      </view>
+
+      <!-- Cart Items -->
+      <view wx:for="{{cartItems}}" wx:key="_id" class="cart-item">
+        <view class="checkbox" data-id="{{item._id}}" bindtap="toggleSelect">
+          <text class="checkbox-icon">{{selectedIds.includes(item._id) ? '☑️' : '☐'}}</text>
+        </view>
+        <view class="item-image" data-book-id="{{item.bookId}}" bindtap="goToBookDetail">
+          <image src="{{item.bookImage}}" mode="aspectFill" class="book-image" />
+        </view>
+        <view class="item-info">
+          <text class="item-title">{{item.bookTitle}}</text>
+          <text class="item-author">{{item.bookAuthor}}</text>
+          <view class="item-price">
+            <text class="current-price">¥{{item.bookPrice}}</text>
+          </view>
+          <view class="item-actions">
+            <view class="quantity-control">
+              <view class="quantity-button" data-id="{{item._id}}" data-type="decrease" bindtap="changeQuantity">
+                <text class="quantity-icon">-</text>
+              </view>
+              <text class="quantity">{{item.quantity}}</text>
+              <view class="quantity-button" data-id="{{item._id}}" data-type="increase" bindtap="changeQuantity">
+                <text class="quantity-icon">+</text>
+              </view>
+            </view>
+            <view class="delete-button" data-id="{{item._id}}" bindtap="deleteItem">
+              <text class="delete-icon">🗑️</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Checkout Section -->
+  <view wx:if="{{cartItems.length > 0}}" class="checkout-section">
+    <view class="checkout-info">
+      <text class="total-label">合计：</text>
+      <text class="total-price">¥{{totalPrice}}</text>
+    </view>
+    <view class="checkout-button" bindtap="checkout">
+      <text class="checkout-button-text">结算</text>
+    </view>
+  </view>
+
+  <!-- Shopping Cart Floating Button -->
+  <view
+    class="cart-floating-button"
+    bindtap="goToCart"
+    bindtouchstart="touchStart"
+    bindtouchmove="touchMove"
+    bindtouchend="touchEnd"
+    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
+  >
+    <text class="cart-icon">🛒</text>
+    <text class="cart-badge">{{cartCount || 0}}</text>
+  </view>
+</view>

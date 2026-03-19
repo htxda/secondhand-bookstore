@@ -1,0 +1,112 @@
+/* app.wxss */
+.container {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+page {
+  background-color: #f5f5f5;
+}
+
+/* 粉色紫色糖果风渐变色标题栏 */
+.custom-navbar {
+  background: linear-gradient(135deg, #FF8FA3 0%, #FFB6C1 30%, #DDA0DD 70%, #D4A5FF 100%);
+  padding-top: 48rpx;
+  padding-bottom: 60rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 143, 163, 0.3);
+  position: relative;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.custom-navbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40rpx;
+  background: linear-gradient(135deg, #FF8FA3 0%, #FFB6C1 30%, #DDA0DD 70%, #D4A5FF 100%);
+  clip-path: polygon(0% 0%, 5% 60%, 10% 30%, 15% 70%, 20% 30%, 25% 60%, 30% 30%, 35% 60%, 40% 30%, 45% 60%, 50% 30%, 55% 60%, 60% 30%, 65% 60%, 70% 30%, 75% 60%, 80% 30%, 85% 60%, 90% 30%, 95% 60%, 100% 0%, 100% 100%, 0% 100%);
+  box-shadow: 0 4rpx 16rpx rgba(255, 143, 163, 0.3);
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24rpx;
+}
+
+.navbar-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+  letter-spacing: 2rpx;
+}
+
+/* Shopping Cart Floating Button */
+.cart-floating-button {
+  position: fixed;
+  bottom: 120rpx;
+  right: 32rpx;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f9a8d4 0%, #fbcfe8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(249, 168, 212, 0.4);
+  z-index: 999;
+  transition: all 0.3s ease;
+  touch-action: none;
+}
+
+.cart-floating-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 12rpx rgba(249, 168, 212, 0.3);
+}
+
+.cart-icon {
+  font-size: 48rpx;
+  color: #ffffff;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(239, 68, 68, 0.3);
+}
+
+.cart-badge-zero {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(239, 68, 68, 0.3);
+}

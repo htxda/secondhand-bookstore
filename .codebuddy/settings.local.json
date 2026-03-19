@@ -1,0 +1,14 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "cloudbase"
+  ],
+  "disabledMcpjsonServers": [],
+  "permissions": {
+    "allow": [
+      "mcp__cloudbase__login",
+      "mcp__cloudbase__createFunction",
+      "mcp__cloudbase__updateFunctionCode"
+    ]
+  }
+}

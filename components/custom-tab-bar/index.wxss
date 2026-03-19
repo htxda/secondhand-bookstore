@@ -1,0 +1,85 @@
+/* components/custom-tab-bar/index.wxss */
+.tab-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 20rpx;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.tab-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  padding-top: 20rpx;
+}
+
+.tab-bar-icon {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+  color: #999999;
+}
+
+.tab-bar-text {
+  font-size: 24rpx;
+  color: #999999;
+  font-weight: 400;
+}
+
+.tab-bar-item.active .tab-bar-icon {
+  color: #FF6B6B;
+}
+
+.tab-bar-item.active .tab-bar-text {
+  color: #FF6B6B;
+  font-weight: 500;
+}
+
+/* 中间发布按钮 */
+.tab-bar-publish {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10rpx;
+}
+
+.publish-button {
+  position: absolute;
+  top: -50rpx;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 107, 0.4);
+  transition: all 0.3s ease;
+  border: 6rpx solid #FFFFFF;
+}
+
+.publish-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 12rpx rgba(255, 107, 107, 0.3);
+}
+
+.publish-icon {
+  font-size: 56rpx;
+  color: white;
+  font-weight: 700;
+  line-height: 1;
+}

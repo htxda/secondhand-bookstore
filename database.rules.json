@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth.openid == doc._openid",
+      ".write": "auth.openid == doc._openid"
+    },
+    "books": {
+      ".read": true,
+      ".write": "auth.openid == doc._openid"
+    },
+    "cart": {
+      ".read": "auth.openid == doc._openid",
+      ".write": "auth.openid == doc._openid"
+    },
+    "orders": {
+      ".read": "auth.openid == doc._openid",
+      ".write": "auth.openid == doc._openid"
+    },
+    "favorites": {
+      ".read": "auth.openid == doc._openid",
+      ".write": "auth.openid == doc._openid"
+    }
+  }
+}

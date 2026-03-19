@@ -1,0 +1,794 @@
+/* 动漫插画风样式 - index.wxss */
+
+.container {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding-bottom: 200rpx; /* 为底部自定义导航栏预留更多空间 */
+  position: relative;
+  overflow: auto;
+  background-color: #f8f9ff;
+}
+
+/* 内容区域容器 */
+.content-container {
+  margin: 24rpx;
+  padding: 32rpx;
+  background-color: #ffffff;
+  border: 8rpx solid #f59e0b;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15), 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  background-image: linear-gradient(145deg, #fef3c7 0%, #ffffff 100%);
+  margin-bottom: 40rpx;
+}
+
+/* 四个角的图片样式 */
+.corner-image {
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 2;
+}
+
+.corner-top-left {
+  top: -8rpx;
+  left: -8rpx;
+}
+
+.corner-top-right {
+  top: -8rpx;
+  right: -8rpx;
+}
+
+.corner-bottom-left {
+  bottom: -8rpx;
+  left: -8rpx;
+}
+
+.corner-bottom-right {
+  bottom: -8rpx;
+  right: -8rpx;
+}
+
+.content-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12rpx;
+  background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #ef4444 100%);
+  border-radius: 16rpx 16rpx 0 0;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 背景图片 */
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+/* 保留原有的所有样式... */
+
+/* 自定义导航栏 - 糖果风格 - 不再需要，因为已删除 */
+/* 
+.custom-navbar {
+  background: linear-gradient(135deg, #FF8FA3 0%, #FF758F 100%);
+  padding-top: 48rpx;
+  padding-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 143, 163, 0.3);
+  position: relative;
+  z-index: 100;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24rpx;
+}
+
+.navbar-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+  letter-spacing: 2rpx;
+}
+*/
+
+/* Hero Section - 古风版 */
+.hero-section {
+  background: transparent;
+  padding: 320rpx 24rpx 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* 移除所有装饰元素和动画 */
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48rpx;
+  color: #ffffff;
+  font-size: 24rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.status-icons {
+  display: flex;
+  gap: 24rpx;
+}
+
+.status-icon {
+  width: 32rpx;
+  height: 20rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+}
+
+.status-icon:last-child {
+  width: 48rpx;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.title-section {
+  display: none;
+}
+
+.main-title {
+  display: none;
+}
+
+.sub-title {
+  display: none;
+}
+
+/* 搜索栏 - 透明覆盖样式 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 auto 32rpx;
+  position: relative;
+  z-index: 1;
+  width: 95%;
+  height: 70rpx;
+  transform: translateY(-5rpx);
+}
+
+.search-icon {
+  display: none;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 32rpx;
+  color: #333333;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0 100rpx 0 60rpx;
+  height: 100%;
+  opacity: 1;
+  font-family: 'SimSun', serif;
+  text-align: left;
+  line-height: 70rpx;
+}
+
+.search-input::placeholder {
+  color: transparent;
+  font-size: 32rpx;
+  font-family: 'SimSun', serif;
+}
+
+/* 搜索按钮 */
+.search-button {
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin-left: 0;
+  position: absolute;
+  right: 0;
+  top: 60rpx;
+  height: 80rpx;
+  width: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  transition: all 0.1s ease;
+  z-index: 10;
+}
+
+/* 搜索按钮点击效果 */
+.search-button:active {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+/* 搜索按钮图片 */
+.search-button-image {
+  width: 80rpx;
+  height: 80rpx;
+  object-fit: contain;
+  transition: all 0.1s ease;
+}
+
+/* 搜索按钮图片点击效果 */
+.search-button:active .search-button-image {
+  transform: scale(0.85);
+  filter: brightness(0.8);
+}
+
+/* 推荐书籍卡片 - 古风卷轴风格 */
+.featured-books-section {
+  padding: 0;
+  position: relative;
+  z-index: 3;
+  margin-bottom: 32rpx;
+}
+
+.section-header {
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #b45309;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  display: inline-block;
+  text-shadow: 2rpx 2rpx 4rpx rgba(180, 83, 9, 0.3);
+  letter-spacing: 2rpx;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8rpx;
+  left: 0;
+  width: 80rpx;
+  height: 4rpx;
+  background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%);
+  border-radius: 2rpx;
+  box-shadow: 0 2rpx 4rpx rgba(245, 158, 11, 0.3);
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24rpx;
+}
+
+.book-card {
+  background: linear-gradient(145deg, #fef3c7 0%, #ffffff 100%);
+  border: 6rpx solid #10b981;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15), 0 3rpx 8rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: linear-gradient(90deg, #10b981 0%, #3b82f6 50%, #10b981 100%);
+}
+
+.book-card:active {
+  transform: translateY(-4rpx) scale(1.02);
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.book-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.book-card-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #059669;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.4;
+  text-align: center;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.book-card-author {
+  font-size: 18rpx;
+  color: #065f46;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.book-card-price {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #059669;
+  font-family: 'Arial', sans-serif;
+  margin-top: 12rpx;
+  text-align: center;
+  text-shadow: 1rpx 1rpx 2rpx rgba(16, 185, 129, 0.3);
+}
+
+@keyframes pricePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* 活动区域 - 横向滚动 */
+.activity-zone-section {
+  padding: 0 0 32rpx;
+  position: relative;
+  z-index: 3;
+  margin-bottom: 32rpx;
+}
+
+.activity-scroll-view {
+  white-space: nowrap;
+  padding-bottom: 16rpx;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.activity-scroll-view::-webkit-scrollbar {
+  display: none;
+}
+
+.activity-scroll-content {
+  display: inline-flex;
+  gap: 20rpx;
+  padding-right: 24rpx;
+}
+
+.activity-card-horizontal {
+  background: linear-gradient(145deg, #fef3c7 0%, #ffffff 100%);
+  border: 6rpx solid #f59e0b;
+  border-radius: 12rpx;
+  padding: 28rpx;
+  min-width: 300rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15), 0 3rpx 8rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.activity-card-horizontal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: linear-gradient(90deg, #f59e0b 0%, #ef4444 50%, #f59e0b 100%);
+}
+
+.activity-card-horizontal:active {
+  transform: translateY(-4rpx) scale(1.02);
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.activity-card-content-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.activity-card-title-horizontal {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #b45309;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.4;
+  text-align: center;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.activity-card-subtitle-horizontal {
+  font-size: 18rpx;
+  color: #78350f;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* 活动卡片 - 古风印章风格 */
+.activity-card {
+  margin: 0 0 32rpx;
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  border: 6rpx solid #b91c1c;
+  border-radius: 16rpx;
+  padding: 36rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.2), 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.activity-card:active {
+  transform: translateY(-4rpx) scale(1.02);
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.2);
+}
+
+.activity-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.activity-card-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.4);
+  text-align: center;
+  letter-spacing: 2rpx;
+}
+
+.activity-card-subtitle {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  font-family: 'Arial', sans-serif;
+  opacity: 0.95;
+  text-align: center;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.3);
+}
+
+.activity-card-action {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #b91c1c;
+  font-family: 'Arial', sans-serif;
+  margin-top: 8rpx;
+  text-align: center;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 16rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid #b91c1c;
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.activity-card-action:active {
+  background: #b91c1c;
+  color: #FFFFFF;
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+/* 古风快捷操作按钮 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  margin: 0 auto 32rpx;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36rpx 32rpx;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  height: 140rpx;
+}
+
+/* 浏览按钮 */
+.browse-button {
+  background: transparent;
+}
+
+/* 上架按钮 */
+.publish-button {
+  background: transparent;
+}
+
+.action-text {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.action-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: transparent;
+  line-height: 1.2;
+}
+
+.action-emoji-box {
+  width: 88rpx;
+  height: 88rpx;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.action-emoji {
+  font-size: 44rpx;
+  opacity: 0;
+}
+
+/* 古风分类部分 */
+.category-section {
+  padding: 0 24rpx;
+  margin-top: 40rpx;
+  margin-bottom: 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.category-container {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.section-title {
+  display: none;
+}
+
+.section-title::after {
+  display: none;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30rpx;
+  padding: 60rpx 40rpx;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  height: 140rpx;
+}
+
+.category-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  opacity: 0;
+}
+
+.category-emoji {
+  font-size: 48rpx;
+  opacity: 0;
+}
+
+.category-name {
+  font-size: 22rpx;
+  color: transparent;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 500;
+  opacity: 0;
+}
+
+/* Featured Books Section - 隐藏 */
+.featured-section {
+  display: none;
+}
+
+.section-header {
+  display: none;
+}
+
+.view-more {
+  display: none;
+}
+
+.view-more-text {
+  display: none;
+}
+
+.books-container {
+  display: none;
+}
+
+.book-item {
+  display: none;
+}
+
+.book-image {
+  display: none;
+}
+
+.book-info {
+  display: none;
+}
+
+.book-title {
+  display: none;
+}
+
+.book-author {
+  display: none;
+}
+
+.book-tags {
+  display: none;
+}
+
+.tag {
+  display: none;
+}
+
+.condition-tag {
+  display: none;
+}
+
+.category-tag {
+  display: none;
+}
+
+.book-price {
+  display: none;
+}
+
+.price-info {
+  display: none;
+}
+
+.current-price {
+  display: none;
+}
+
+.original-price {
+  display: none;
+}
+
+/* CTA Section - 隐藏 */
+.cta-section {
+  display: none;
+}
+
+.cta-banner {
+  display: none;
+}
+
+.cta-emoji {
+  display: none;
+}
+
+.cta-content {
+  display: none;
+}
+
+.cta-title {
+  display: none;
+}
+
+.cta-subtitle {
+  display: none;
+}
+
+/* 古风购物车悬浮按钮 */
+.cart-floating-button {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  border: 6rpx solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100rpx;
+  height: 100rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.25), 0 3rpx 8rpx rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.cart-floating-button:active {
+  transform: scale(0.9);
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.3);
+}
+
+.cart-icon {
+  font-size: 44rpx;
+  color: #ffffff;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.3);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  background: #ffd93d;
+  color: #2d3436;
+  font-size: 22rpx;
+  font-weight: 700;
+  min-width: 36rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid #ffffff;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 375px) {
+  .main-title {
+    font-size: 44rpx;
+  }
+
+  .action-title {
+    font-size: 26rpx;
+  }
+
+  .action-emoji-box {
+    width: 72rpx;
+    height: 72rpx;
+  }
+
+  .action-emoji {
+    font-size: 36rpx;
+  }
+
+  .category-icon {
+    width: 100rpx;
+    height: 100rpx;
+  }
+
+  .book-image {
+    width: 140rpx;
+    height: 200rpx;
+  }
+}

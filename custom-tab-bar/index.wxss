@@ -1,0 +1,65 @@
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100rpx;
+    background: white;
+    display: flex;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-radius: 55rpx 55rpx 0 0;
+    box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .tab-bar-item {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .icon-box {
+    font-size: 59rpx;
+    margin-bottom: 4rpx;
+  }
+  
+  .tab-text {
+    font-size: 25rpx;
+    font-weight: 500;
+  }
+  
+  /* 中间凸起按钮的容器 */
+  .special-wrapper {
+    position: relative;
+    top: -40rpx; /* 向上偏移 */
+    overflow: visible;
+  }
+  
+  .special-item {
+    width: 120rpx;
+    height: 120rpx;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -10rpx 20rpx rgba(0, 0, 0, 0.03);
+  }
+  
+  .special-icon {
+    width: 100rpx;
+    height: 100rpx;
+    background: linear-gradient(135deg, #a8a297, #8e887d); /* 仿图中的灰色渐变 */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .scan-icon {
+    color: white;
+    font-size: 44rpx;
+    font-weight: bold;
+  }
