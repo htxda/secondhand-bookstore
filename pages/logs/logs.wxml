@@ -1,4 +1,2 @@
-<!-- logs.wxml -->
-<view class="container">
-  <text class="title">日志页面</text>
-</view>
+<!--pages/logs/logs.wxml-->
+<text>pages/logs/logs.wxml</text>

@@ -1,85 +1,106 @@
-/* components/custom-tab-bar/index.wxss */
-.tab-bar-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120rpx;
-  background-color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding-bottom: 20rpx;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  border-top: 1rpx solid #F0F0F0;
-}
-
-.tab-bar-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  height: 100%;
-  padding-top: 20rpx;
-}
-
-.tab-bar-icon {
-  font-size: 36rpx;
-  margin-bottom: 8rpx;
-  color: #999999;
-}
-
-.tab-bar-text {
-  font-size: 24rpx;
-  color: #999999;
-  font-weight: 400;
-}
-
-.tab-bar-item.active .tab-bar-icon {
-  color: #FF6B6B;
-}
-
-.tab-bar-item.active .tab-bar-text {
-  color: #FF6B6B;
-  font-weight: 500;
-}
-
-/* 中间发布按钮 */
-.tab-bar-publish {
-  position: relative;
-  flex: 1;
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 10rpx;
-}
-
-.publish-button {
-  position: absolute;
-  top: -50rpx;
-  width: 110rpx;
-  height: 110rpx;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(255, 107, 107, 0.4);
-  transition: all 0.3s ease;
-  border: 6rpx solid #FFFFFF;
-}
-
-.publish-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 2rpx 12rpx rgba(255, 107, 107, 0.3);
-}
-
-.publish-icon {
-  font-size: 56rpx;
-  color: white;
-  font-weight: 700;
-  line-height: 1;
-}
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 115rpx;
+    background: transparent;
+    display: flex;
+    padding-bottom: 0;
+    padding-top:25rpx;
+    box-shadow: none;
+    border-top: none;
+  }
+  
+  .tab-bar::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50rpx;
+    right: 50rpx;
+    height: 90rpx;
+    background: white;
+    border-radius: 55rpx 55rpx 0 0;
+    box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+    border-top: 1rpx solid #e0e0e0;
+    z-index: -1;
+  }
+  
+  .tab-bar-item {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .icon-box {
+    margin-bottom: 4rpx;
+    width: 90rpx;
+    height: 90rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .tab-icon {
+    width: 50rpx;
+    height: 50rpx;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+  
+  .tab-text {
+    font-size: 22rpx;
+    font-weight: 500;
+    color: #666666;
+    transition: all 0.3s ease;
+  }
+  
+  /* 选中状态 */
+  .tab-bar-item.active .tab-icon {
+    opacity: 1;
+    color: #CCFF00;
+  }
+  
+  .tab-bar-item.active .tab-text {
+    color: #CCFF00;
+    font-weight: 600;
+  }
+  
+  /* 中间凸起按钮的容器 */
+  .special-wrapper {
+    position: relative;
+    top: -40rpx; /* 向上偏移 */
+    overflow: visible;
+  }
+  
+  .special-item {
+    width: 120rpx;
+    height: 120rpx;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -10rpx 20rpx rgba(0, 0, 0, 0.03);
+  }
+  
+  .special-icon {
+    width: 100rpx;
+    height: 100rpx;
+    background: linear-gradient(135deg, #CCFF00 0%, #99CC00 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4rpx 16rpx rgba(204, 255, 0, 0.3);
+  }
+  
+  .scan-icon {
+    color: #ffffff;
+    font-size: 40rpx;
+    font-weight: bold;
+    display: block;
+  }

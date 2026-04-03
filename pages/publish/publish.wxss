@@ -5,7 +5,7 @@
   box-sizing: border-box;
   background: linear-gradient(180deg, #FFF5F5 0%, #FFF0F3 100%);
   min-height: 100vh;
-  padding-bottom: 120rpx; /* 为底部导航栏留出空间 */
+  padding-bottom: 100rpx; /* 为底部导航栏留出空间 */
 }
 
 /* 自定义导航栏 */

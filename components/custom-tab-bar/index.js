@@ -1,35 +1,35 @@
-// components/custom-tab-bar/index.js
 Component({
-  data: {
-    selected: 0
-  },
-  attached() {
-    // 监听页面显示，更新选中状态
-    const pages = getCurrentPages();
-    const currentPage = pages[pages.length - 1];
-    const path = currentPage.route;
-    this.updateSelected(path);
-  },
-  methods: {
-    switchTab(e) {
-      const { path, index } = e.currentTarget.dataset;
-      wx.switchTab({
-        url: path,
-        success: () => {
-          this.setData({ selected: index });
-        }
-      });
+    data: {
+      selected: 0,
+      color: "#9ca3af",
+      selectedColor: "#FF8FA3",
+      list: [
+        { pagePath: "/pages/index/index", text: "首页" },
+        { pagePath: "/pages/books/books", text: "书籍" },
+        { pagePath: "/pages/publish/publish", text: "发布" },
+        { pagePath: "/pages/cart/cart", text: "购物车" }, // 对应图片中的关注
+        { pagePath: "/pages/profile/profile", text: "我的" }  // 对应图片中的我
+      ]
     },
-    updateSelected(path) {
-      // 根据当前页面路径更新选中状态
-      const pathMap = {
-        'pages/index/index': 0,
-        'pages/books/books': 1,
-        'pages/publish/publish': 2,
-        'pages/profile/profile': 3
-      };
-      const selected = pathMap[path] || 0;
-      this.setData({ selected });
+    methods: {
+      switchTab(e) {
+        const data = e.currentTarget.dataset
+        const url = data.path
+        const index = data.index
+        
+        // 更新选中状态
+        this.setData({ selected: index })
+        
+        wx.switchTab({ 
+          url: url,
+          success: () => {
+            // 成功切换后再更新选中状态
+            this.setData({ selected: index })
+          },
+          fail: (err) => {
+            console.error('页面跳转失败:', err)
+          }
+        })
+      }
     }
-  }
-});
+  })

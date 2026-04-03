@@ -6,6 +6,13 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
 
+async function checkUserRegistered(db, OPENID) {
+  const userRes = await db.collection('users').where({
+    _openid: OPENID
+  }).get()
+  return userRes.data.length > 0
+}
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   try {
@@ -21,10 +28,30 @@ exports.main = async (event, context) => {
     const db = cloud.database()
     const _ = db.command
 
+    // 检查用户是否已注册（除了 getCount 操作，其他都需要验证）
+    const publicActions = ['getCount']
+    if (!publicActions.includes(action)) {
+      const isRegistered = await checkUserRegistered(db, OPENID)
+      if (!isRegistered) {
+        return {
+          success: false,
+          needLogin: true,
+          message: '请先登录后再使用购物车功能'
+        }
+      }
+    }
+
     switch (action) {
       // 添加到购物车
       case 'add': {
         const { bookId } = data
+
+        if (!bookId) {
+          return {
+            success: false,
+            message: 'bookId 不能为空'
+          }
+        }
 
         // 检查书籍是否存在
         const bookRes = await db.collection('books').doc(bookId).get()

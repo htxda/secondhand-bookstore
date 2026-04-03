@@ -15,8 +15,7 @@ Page({
     selectedCategory: null,
     searchKeyword: "",
     isSearching: false,
-    cartCount: 0,
-    imageUrls: []
+    cartCount: 0
   },
   onLoad(options) {
     console.log('Books page loaded', options);
@@ -82,20 +81,9 @@ Page({
         wx.hideLoading();
 
         const books = res.data || [];
-        // 处理图片字段,可能是 image 或 images
-        const imageUrls = books.map(book => {
-          if (book.images && book.images.length > 0) {
-            return book.images[0];
-          } else if (book.image) {
-            return book.image;
-          }
-          return '';
-        });
-
         this.setData({
           allBooks: books,
-          books: books,
-          imageUrls: imageUrls
+          books: books
         });
       })
       .catch(err => {
@@ -124,7 +112,7 @@ Page({
     }
 
     wx.navigateTo({
-      url: `/pages/bookDetail/bookDetail?id=${bookId}`,
+      url: `/packageA/pages/bookDetail/bookDetail?id=${bookId}`,
       success: () => {
         console.log('跳转到书籍详情页成功, bookId:', bookId);
       },

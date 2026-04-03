@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <view class="container">
   <!-- 背景图片 -->
-  <image style="height: 1289rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx" src="/images/books/9fbfb5d427ab78208ac16cb55ef74856.jpg" class="background-image" mode="widthFix" />
+  <image style="height: 1289rpx; display: block; box-sizing: border-box; left: 0rpx; top: 0rpx" src="/packageA/images/9fbfb5d427ab78208ac16cb55ef74856.jpg" class="background-image" mode="widthFix" />
   
   <!-- Hero Section -->
   <view class="hero-section" style="position: relative; left: -22rpx; top: -1rpx">
@@ -25,7 +25,7 @@
         confirm-type="search"
       />
       <view class="search-button" bindtap="onSearchConfirm">
-        <image style="width: 185rpx; height: 191rpx; display: block; box-sizing: border-box; position: relative; left: -1rpx; top: -2rpx" src="/images/sousuo.png" class="search-button-image" mode="aspectFit" />
+        <image style="width: 185rpx; height: 191rpx; display: block; box-sizing: border-box; position: relative; left: 22rpx; top: 1rpx" src="/images/sousuo.png" class="search-button-image" mode="aspectFit" />
       </view>
     </view>
 
@@ -101,10 +101,10 @@
   <!-- 内容区域容器 -->
   <view class="content-container" style="position: relative; left: -5rpx; top: 68rpx; width: 714rpx; display: block; box-sizing: border-box">
     <!-- 四个角的图片 -->
-    <image style="position: absolute; left: -7rpx; top: 704rpx" src="/images/books/icon_s31ujvm56je/biankuang.png" class="corner-image corner-top-left" />
-    <image src="/images/books/icon_s31ujvm56je/biankuang_1.png" class="corner-image corner-top-right" />
-    <image style="position: absolute; left: 648rpx; top: 703rpx" src="/images/books/icon_s31ujvm56je/biankuang_2.png" class="corner-image corner-bottom-left" />
-    <image style="position: absolute; left: -13rpx; top: -7rpx; width: 60rpx; height: 60rpx; display: block; box-sizing: border-box" src="/images/books/icon_s31ujvm56je/arrow-right-bottom.png" class="corner-image corner-bottom-right" />
+    <image style="position: absolute; left: -7rpx; top: 704rpx" src="/packageA/images/icon_s31ujvm56je/biankuang.png" class="corner-image corner-top-left" />
+    <image src="/packageA/images/icon_s31ujvm56je/biankuang_1.png" class="corner-image corner-top-right" />
+    <image style="position: absolute; left: 648rpx; top: 703rpx" src="/packageA/images/icon_s31ujvm56je/biankuang_2.png" class="corner-image corner-bottom-left" />
+    <image style="position: absolute; left: -13rpx; top: -7rpx; width: 60rpx; height: 60rpx; display: block; box-sizing: border-box" src="/packageA/images/icon_s31ujvm56je/arrow-right-bottom.png" class="corner-image corner-bottom-right" />
     <!-- 推荐书籍卡片 -->
     <view class="featured-books-section">
       <view class="section-header">
@@ -195,4 +195,3 @@
 </view>
 
 <!-- 底部自定义导航栏 -->
-<custom-tab-bar></custom-tab-bar>

@@ -1,106 +1,245 @@
-<!-- bookDetail.wxml -->
-<view class="container">
-  <!-- 粉色渐变色标题栏 -->
-  <view class="custom-navbar">
-    <view class="navbar-content">
-      <text class="navbar-title">书籍详情</text>
-    </view>
-  </view>
-  <!-- Header with Back Button -->
+<!--书籍详情页 - 现代轻奢风格 - 高级交互版-->
+<view class="page-container" style="opacity: {{pageLoaded ? 1 : 0}}">
+  <!-- 头部导航 -->
   <view class="header">
-    <view class="back-button" bindtap="goBack">
-      <text class="back-icon">←</text>
+    <view class="nav-btn {{backBtnPressed ? 'btn-pressed' : ''}}" 
+          bindtap="goBack" 
+          bindtouchstart="onBackBtnPress"
+          bindtouchend="onBackBtnRelease"
+          hover-class="none">
+      <text class="icon-back">←</text>
     </view>
-    <view class="header-actions">
-      <view class="action-button" bindtap="favoriteBook">
-        <text class="action-icon">❤️</text>
-      </view>
-      <view class="action-button" bindtap="shareBook">
-        <text class="action-icon">📤</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- Book Images -->
-  <view class="images-section">
-    <image src="{{imageUrls[currentImageIndex]}}" mode="aspectFill" class="main-image" />
-    <view class="image-thumbs">
-      <view 
-        wx:for="{{imageUrls}}" 
-        wx:key="index" 
-        class="thumb-item {{currentImageIndex === index ? 'active' : ''}}"
-        data-index="{{index}}"
-        bindtap="switchImage"
-      >
-        <image src="{{item}}" mode="aspectFill" class="thumb-image" />
+    <view class="nav-btn {{favBtnPressed ? 'btn-pressed' : ''}}" 
+          bindtap="toggleFavorite"
+          bindtouchstart="onFavBtnPress"
+          bindtouchend="onFavBtnRelease"
+          hover-class="none">
+      <view class="icon-heart-wrapper {{isFavorite ? 'favorite-active' : ''}}">
+        <text class="icon-heart">{{isFavorite ? '♥' : '♡'}}</text>
       </view>
     </view>
   </view>
 
-  <!-- Book Info -->
-  <view class="info-section">
-    <view class="price-info">
-      <text class="current-price">¥{{book.price}}</text>
-      <text class="original-price">¥{{book.originalPrice}}</text>
-    </view>
-    <text class="book-title">{{book.title}}</text>
-    <text class="book-author">{{book.author}}</text>
-    <view class="book-tags">
-      <text class="tag condition-tag">{{book.condition}}</text>
-      <text class="tag category-tag">{{book.category}}</text>
-    </view>
-    <view class="book-meta">
-      <text class="meta-item">出版社: {{book.publisher}}</text>
-      <text class="meta-item">出版时间: {{book.publishDate}}</text>
+  <!-- 书籍图片展示区 -->
+  <view class="book-image-section">
+    <swiper class="image-swiper" 
+            indicator-dots="{{false}}" 
+            circular="{{true}}"
+            bindchange="onSwiperChange"
+            duration="400"
+            easing-function="easeInOutCubic">
+      <swiper-item wx:for="{{bookImages}}" wx:key="index">
+        <image class="book-image {{imageLoaded[index] ? 'image-loaded' : ''}}" 
+               src="{{item}}" 
+               mode="aspectFit"
+               bindload="onImageLoad"
+               data-index="{{index}}"
+               bindtap="previewImage"
+               data-src="{{item}}"></image>
+        <view class="image-skeleton" wx:if="{{!imageLoaded[index]}}">
+          <view class="skeleton-shimmer"></view>
+        </view>
+      </swiper-item>
+    </swiper>
+    <view class="image-dots">
+      <view wx:for="{{bookImages}}" 
+            wx:key="index" 
+            class="dot {{currentImageIndex === index ? 'dot-active' : ''}}"></view>
     </view>
   </view>
 
-  <!-- Seller Info (Mock) -->
-  <view class="seller-section">
-    <view class="seller-info">
-      <image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200" mode="aspectFill" class="seller-avatar" />
-      <view class="seller-details">
-        <text class="seller-name">书友_{{_openid ? _openid.substring(0, 6) : '001'}}</text>
-        <view class="seller-rating">
-          <text class="star">⭐</text>
-          <text class="rating-value">4.8</text>
-          <text class="books-sold">(已售 12 本)</text>
+  <!-- 书籍信息卡片 -->
+  <view class="info-card card-fade-in" style="animation-delay: 0.1s">
+    <view class="book-title">{{bookInfo.title}}</view>
+    <view class="book-subtitle">{{bookInfo.subtitle}}</view>
+    
+    <view class="price-section">
+      <view class="current-price price-bounce">¥{{bookInfo.price}}</view>
+      <view class="original-price" wx:if="{{bookInfo.originalPrice}}">¥{{bookInfo.originalPrice}}</view>
+      <view class="rating rating-pulse">
+        <text class="star">★</text>
+        <text class="rating-text">{{bookInfo.rating}}</text>
+      </view>
+    </view>
+    
+    <!-- 销量和库存标签 -->
+    <view class="tags-section">
+      <view class="tag tag-sales">
+        <text class="tag-icon">🔥</text>
+        <text>月销 {{salesCount}}</text>
+      </view>
+      <view class="tag tag-stock">
+        <text class="tag-icon">📦</text>
+        <text>库存充足</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 作者信息卡片 -->
+  <view class="author-card card-fade-in" style="animation-delay: 0.2s">
+    <view class="card-header">
+      <text class="section-title">作者信息</text>
+    </view>
+    <view class="author-content" bindtap="viewAuthorDetail" hover-class="author-hover">
+      <view class="author-avatar-wrapper">
+        <image class="author-avatar" 
+               src="{{authorInfo.avatar}}" 
+               mode="aspectFill"
+               lazy-load="{{true}}"></image>
+        <view class="avatar-ring"></view>
+      </view>
+      <view class="author-details">
+        <view class="author-name">
+          {{authorInfo.name}}
+          <text class="verified-badge">✓</text>
+        </view>
+        <view class="author-title">{{authorInfo.title}}</view>
+        <view class="author-bio">{{authorInfo.bio}}</view>
+      </view>
+      <view class="arrow-right">›</view>
+    </view>
+  </view>
+
+  <!-- 书籍详情卡片 -->
+  <view class="details-card card-fade-in" style="animation-delay: 0.3s">
+    <view class="card-header">
+      <text class="section-title">书籍详情</text>
+      <view class="collapse-btn {{detailsCollapsed ? 'collapsed' : ''}}" 
+            bindtap="toggleDetails"
+            hover-class="collapse-hover">
+        <text class="collapse-icon">{{detailsCollapsed ? '展开' : '收起'}}</text>
+        <text class="arrow-icon">{{detailsCollapsed ? '↓' : '↑'}}</text>
+      </view>
+    </view>
+    <view class="detail-items {{detailsCollapsed ? 'details-collapsed' : 'details-expanded'}}">
+      <view class="detail-item" 
+            wx:for="{{bookDetails}}" 
+            wx:key="label"
+            hover-class="detail-hover">
+        <text class="detail-label">{{item.label}}</text>
+        <text class="detail-value">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 书籍简介卡片 -->
+  <view class="description-card card-fade-in" style="animation-delay: 0.4s">
+    <view class="card-header">
+      <text class="section-title">内容简介</text>
+    </view>
+    <view class="description-text {{isExpanded ? 'expanded' : ''}}">
+      {{bookInfo.description}}
+      <view class="description-gradient" wx:if="{{!isExpanded}}"></view>
+    </view>
+    <view class="expand-btn {{expandBtnPressed ? 'btn-pressed' : ''}}" 
+          bindtap="toggleDescription"
+          bindtouchstart="onExpandBtnPress"
+          bindtouchend="onExpandBtnRelease"
+          hover-class="none">
+      <text>{{isExpanded ? '收起' : '展开全部'}}</text>
+      <text class="arrow {{isExpanded ? 'arrow-up' : 'arrow-down'}}">{{isExpanded ? '↑' : '↓'}}</text>
+    </view>
+  </view>
+
+  <!-- 推荐书籍 -->
+  <view class="recommend-section card-fade-in" style="animation-delay: 0.5s">
+    <view class="card-header">
+      <text class="section-title">相关推荐</text>
+      <view class="more-link" bindtap="viewMoreRecommend" hover-class="link-hover">
+        <text>更多</text>
+        <text class="link-arrow">›</text>
+      </view>
+    </view>
+    <scroll-view class="recommend-scroll" 
+                 scroll-x="{{true}}" 
+                 show-scrollbar="{{false}}"
+                 enable-flex="{{true}}"
+                 scroll-with-animation="{{true}}">
+      <view class="recommend-item" 
+            wx:for="{{recommendBooks}}" 
+            wx:key="id" 
+            bindtap="viewBook" 
+            data-id="{{item.id}}"
+            hover-class="recommend-hover"
+            hover-stay-time="100">
+        <view class="recommend-image-wrapper">
+          <image class="recommend-image" 
+                 src="{{item.cover}}" 
+                 mode="aspectFill"
+                 lazy-load="{{true}}"></image>
+          <view class="recommend-tag" wx:if="{{item.tag}}">{{item.tag}}</view>
+        </view>
+        <view class="recommend-title">{{item.title}}</view>
+        <view class="recommend-price-row">
+          <text class="recommend-price">¥{{item.price}}</text>
+          <view class="recommend-cart-btn" 
+                catchtap="quickAddToCart" 
+                data-id="{{item.id}}"
+                hover-class="cart-btn-hover">
+            <text class="cart-icon">+</text>
+          </view>
         </view>
       </view>
-      <view class="contact-button" bindtap="contactSeller">
-        <text class="contact-text">联系卖家</text>
+    </scroll-view>
+  </view>
+
+  <!-- 底部占位，避免被底部栏遮挡 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar {{bottomBarShow ? 'bar-show' : ''}}">
+    <view class="action-btns">
+      <view class="icon-btn {{serviceBtnPressed ? 'icon-pressed' : ''}}" 
+            bindtap="contactService"
+            bindtouchstart="onServiceBtnPress"
+            bindtouchend="onServiceBtnRelease"
+            hover-class="none">
+        <text class="icon">💬</text>
+        <text class="btn-label">客服</text>
+      </view>
+      <view class="icon-btn {{cartBtnPressed ? 'icon-pressed' : ''}}" 
+            bindtap="navigateToCart"
+            bindtouchstart="onCartBtnPress"
+            bindtouchend="onCartBtnRelease"
+            hover-class="none">
+        <view class="cart-badge" wx:if="{{cartCount > 0}}">{{cartCount > 99 ? '99+' : cartCount}}</view>
+        <text class="icon">🛒</text>
+        <text class="btn-label">购物车</text>
+      </view>
+    </view>
+    <view class="main-btns">
+      <view class="btn-secondary {{addCartBtnPressed ? 'btn-active' : ''}}" 
+            bindtap="addToCart"
+            bindtouchstart="onAddCartPress"
+            bindtouchend="onAddCartRelease"
+            hover-class="none">
+        <view class="btn-ripple {{addCartRipple ? 'ripple-active' : ''}}"></view>
+        <text>加入购物车</text>
+      </view>
+      <view class="btn-primary {{buyBtnPressed ? 'btn-active' : ''}}" 
+            bindtap="buyNow"
+            bindtouchstart="onBuyPress"
+            bindtouchend="onBuyRelease"
+            hover-class="none">
+        <view class="btn-ripple {{buyRipple ? 'ripple-active' : ''}}"></view>
+        <text>立即购买</text>
+        <view class="btn-shine"></view>
       </view>
     </view>
   </view>
 
-  <!-- Book Description -->
-  <view class="description-section">
-    <text class="section-title">书籍描述</text>
-    <text class="description">{{book.description}}</text>
+  <!-- Toast 提示 -->
+  <view class="custom-toast {{toastShow ? 'toast-show' : ''}}" wx:if="{{toastMessage}}">
+    <view class="toast-icon">{{toastIcon}}</view>
+    <text class="toast-text">{{toastMessage}}</text>
   </view>
 
-  <!-- Action Buttons -->
-  <view class="action-section">
-    <view class="action-buttons">
-      <view class="secondary-button" bindtap="addToCart">
-        <text class="button-text">加入购物车</text>
-      </view>
-      <view class="primary-button" bindtap="contactSeller">
-        <text class="button-text">立即购买</text>
-      </view>
+  <!-- 加载动画 -->
+  <view class="loading-overlay" wx:if="{{showLoading}}">
+    <view class="loading-spinner">
+      <view class="spinner-ring"></view>
+      <view class="spinner-ring"></view>
+      <view class="spinner-ring"></view>
     </view>
-  </view>
-
-  <!-- Shopping Cart Floating Button -->
-  <view
-    class="cart-floating-button"
-    bindtap="goToCart"
-    bindtouchstart="touchStart"
-    bindtouchmove="touchMove"
-    bindtouchend="touchEnd"
-    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
-  >
-    <text class="cart-icon">🛒</text>
-    <text class="cart-badge">{{cartCount || 0}}</text>
   </view>
 </view>

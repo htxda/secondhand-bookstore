@@ -1,0 +1,207 @@
+7[自动热重载] 已开启代码文件保存后自动热重载
+[Deprecation] SharedArrayBuffer will require cross-origin isolation as of M92, around July 2021. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details.
+[system] WeChatLib: 3.14.2 (2026.2.10 20:21:14)
+[system] No. of subpackages: 2
+[system] LazyCodeLoading: false
+Thu Mar 26 2026 15:02:45 GMT+0800 (中国标准时间) 文章推荐
+getSystemInfo API 提示
+小程序基础库从 3.7.0 起正式支持 HarmonyOS 平台，开发者可通过 wx.getDeviceInfo() 判断平台进行兼容处理，让小程序在 HarmonyOS 也获得最佳体验，查看指引[https://developers.weixin.qq.com/community/develop/doc/00008e041106f0259bb33530164409]
+关于上述警告，点击查看更多信息：https://developers.weixin.qq.com/community/develop/doc/00008e041106f0259bb33530164409]
+app.js? [sm]:5 App launched
+app.js? [sm]:2 [Perf] App.onLaunch took 68ms
+(anonymous) @ app.js? [sm]:2
+Promise.then (async)
+(anonymous) @ VM74:1721
+Promise.then (async)
+(anonymous) @ VM74:2
+(anonymous) @ VM74:1724
+index.js? [sm]:30 Index page loaded
+index.js? [sm]:58 用户未登录，无法获取购物车数量
+[system] Launch Time: 4713 ms
+cart.js? [sm]:11 Cart page loaded
+[Deprecation] SharedArrayBuffer will require cross-origin isolation as of M92, around July 2021. See https://developer.chrome.com/blog/enabling-shared-array-buffer/ for more details.
+profile.js? [sm]:58 wx.getSystemInfoSync is deprecated.Please use wx.getSystemSetting/wx.getAppAuthorizeSetting/wx.getDeviceInfo/wx.getWindowInfo/wx.getAppBaseInfo instead.
+onLoad @ profile.js? [sm]:58
+books.js? [sm]:21 Books page loaded {}
+books.js? [sm]:346 用户未登录，无法获取购物车数量
+books.js? [sm]:346 用户未登录，无法获取购物车数量
+index.js? [sm]:58 用户未登录，无法获取购物车数量
+WAWorker.js:1 [worker] reportRealtimeAction:fail not support
+U @ WAWorker.js:1
+invoke @ WAWorker.js:1
+invoke @ WAWorker.js:1
+G @ WAWorker.js:1
+(anonymous) @ WAWorker.js:1
+qe @ WAWorker.js:1
+Q @ WAWorker.js:1
+d @ WAWorker.js:1
+(anonymous) @ WAWorker.js:1
+(anonymous) @ WAWorker.js:1
+setTimeout (async)
+globalThis.setTimeout @ WAWorker.js:1
+Y @ WAWorker.js:1
+De @ WAWorker.js:1
+(anonymous) @ WAWorker.js:1
+r @ WAWorker.js:1
+s @ WAWorker.js:1
+callAndRemove @ WAWorker.js:1
+invokeCallbackHandler @ WAWorker.js:1
+eval @ VM11:1
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+> 1 | <view class="container">
+    | ^
+  2 |   <!-- 顶部导航栏 -->
+  3 |   <header class="header">
+  4 |     <view class="header-left">
+at files://pages/cart/cart.wxml#1(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  19 |     <view wx:if="{{cartItems.length === 0}}" class="empty-cart">
+  20 |       <text class="empty-icon">🛒</text>
+> 21 |       <text class="empty
+     |                        ^
+at files://pages/cart/cart.wxml#21(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  21 |       <text class="empty-text">购物车为空</text>
+  22 |       <button class="empty-button" bindtap="goToBooks">去逛逛</button>
+> 23 |     </
+     |      ^
+at files://pages/cart/cart.wxml#23(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+  28 |       <view class="select-all-header">
+  29 |         <view class="select-all-left">
+> 30 |           <view class="checkbox-wrapper" bindtap="toggleSelectAll">
+     |           ^
+  31 | 
+at files://pages/cart/cart.wxml#30(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  30 |           <view class="checkbox-wrapper" bindtap="toggleSelectAll">
+  31 |             <view class="checkbox {{selectedAll ?
+at files://pages/cart/cart.wxml#32(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  32 |               <text wx:if="{{selectedAll}}" class="check-icon">✓</text>
+  33 |             </view>
+> 34 |           </
+     |            ^
+at files://pages/cart/cart.wxml#34(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+  26 |     <view wx:else class="cart-list">
+  27 |       <!-- 全选头部 -->
+> 28 |       <view class="select-all-header">
+     |       ^
+  29 |         <view class="select-all-left">
+  30 |           <view class="checkbox-wrapper" bindtap="toggleSelectAll">
+  31 |             <view class="checkbox {{selectedAll ? 'checked' : ''}}">
+at files://pages/cart/cart.wxml#28(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  36 |         </view>
+  37 |         <view wx:if="{{selectedIds.length > 0}}" class="batch-delete-btn" bindtap="batchDelete">
+> 38 |           <text class="batch-delete-text">删除 ({{selectedIds.length
+     |                                                                   ^
+at files://pages/cart/cart.wxml#38(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+2[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  42 |       <!-- 商品列表 -->
+  43 |       <view class="items-container">
+> 44 |         <view wx:for="{{cartItems}}" wx:key="_id"
+     |                                                 ^
+at files://pages/cart/cart.wxml#44(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  44 |         <view wx:for="{{cartItems}}" wx:key="_id" class="cart-item">
+  45 |           <view class="checkbox-wrapper" data-id="{{item._id}}" bindtap="toggleSelect">
+> 46 |             <view class="checkbox {{selectedIds.includes(item._id)
+     |                                                                  ^
+at files://pages/cart/cart.wxml#46(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  48 |             </view>
+  49 |           </view>
+> 50 |           <view class="item-image-wrapper" data-book-id="{{
+     |                                                           ^
+at files://pages/cart/cart.wxml#50(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  53 |           <view class="item-content">
+  54 |             <view class="item-header">
+> 55 |               <text class="item-title">{{
+     |                                         ^
+at files://pages/cart/cart.wxml#55(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+  61 |             <view class="item-footer">
+  62 |               <text class="item-price">¥{{item.bookPrice}}</text>
+> 63 |               <view class="quantity-control">
+     |               ^
+  64 |                 <view class="qty-btn" data-id="{{item._id}}" data-type="decrease" bindtap="changeQuantity">
+  65 |                   <text class="qty-icon">−</text>
+  66 |                 </view>
+at files://pages/cart/cart.wxml#63(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+  66 |                 </view>
+  67 |                 <text class="qty-value">{{item.quantity}}</text>
+> 68 |                 <view class="qty-btn" data-id="{{item._id}}" data-type="increase" bindtap="changeQuantity">
+     |                 ^
+  69 | 
+at files://pages/cart/cart.wxml#68(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+  76 | 
+  77 |       <!-- 猜你喜欢 -->
+> 78 |       <view class="recommend-section">
+     |       ^
+  79 |         <text class="recommend-title">猜你喜欢</text>
+  80 | 
+at files://pages/cart/cart.wxml#78(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  80 |         <view class="recommend-grid">
+  81 |           <view class="recommend-item">
+> 82 |             <view class
+     |                       ^
+at files://pages/cart/cart.wxml#82(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  81 |           <view class="recommend-item">
+  82 |             <view class="recommend-image-wrapper">
+> 83 |               <image src="https://images.unsplash.com/photo-154494
+     |                                                                  ^
+at files://pages/cart/cart.wxml#83(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  81 |           <view class="recommend-item">
+  82 |             <view class="recommend-image-wrapper">
+> 83 |               <image src="https://images.unsplash.com/photo-1544947950-fa07a98d23
+     |                                                                                 ^
+at files://pages/cart/cart.wxml#83(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  88 |           <view class="recommend-item">
+  89 |             <view class="recommend-image-wrapper">
+> 90 |               <
+     |               ^
+at files://pages/cart/cart.wxml#90(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+unexpected end
+  91 |             </view>
+  92 |             <text class="recommend-name">数据结构</text>
+> 93 |             <text class
+     |                       ^
+at files://pages/cart/cart.wxml#93(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[自动热重载错误 WXML 文件编译错误] ./pages/cart/cart.wxml
+end tag missing, near `view`
+> 1 | <view class="container">
+    | ^
+  2 |   <!-- 顶部导航栏 -->
+  3 |   <header class="header">
+  4 |     <view class="header-left">
+at files://pages/cart/cart.wxml#1(env: Windows,mp,2.01.2510260; lib: 3.14.2)
+[pages/cart/cart] Some selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute selectors.(./pages/cart/cart.wxss:4:1)

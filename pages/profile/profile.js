@@ -1,6 +1,13 @@
-// profile.js
+// pages/profile/profile.js
+const app = getApp()
+
 Page({
   data: {
+    statusBarHeight: 20,
+    scrollHeight: 600,
+    safeAreaBottom: 0,
+    activeTab: 4,
+    progressWidth: 0,
     cartButtonTop: null,
     cartButtonBottom: '120rpx',
     cartButtonLeft: null,
@@ -8,65 +15,61 @@ Page({
     startX: 0,
     startY: 0,
     isDragging: false,
-    user: {
-      name: "用户",
-      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9maWxlfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=80&w=1080",
+    isLoggedIn: false,
+    cartCount: 0,
+
+    userInfo: {
+      name: '用户',
       rating: 4.8,
-      booksSold: 12,
-      booksBought: 8
+      sold: 12,
+      bought: 8,
+      collected: 15
     },
-    menuItems: [
-      {
-        id: "sold",
-        title: "我卖出的",
-        icon: "📤",
-        count: 12
-      },
-      {
-        id: "bought",
-        title: "我买到的",
-        icon: "📥",
-        count: 8
-      },
-      {
-        id: "published",
-        title: "我的发布",
-        icon: "📚",
-        count: 5
-      },
-      {
-        id: "favorites",
-        title: "我的收藏",
-        icon: "❤️",
-        count: 15
-      }
+
+    statsData: [
+      { value: '12', label: '已卖出', iconType: 'sell' },
+      { value: '8',  label: '已买到', iconType: 'buy'  },
+      { value: '15', label: '已收藏', iconType: 'heart' }
     ],
-    settingsItems: [
-      {
-        id: "profile",
-        title: "个人资料",
-        icon: "👤"
-      },
-      {
-        id: "address",
-        title: "收货地址",
-        icon: "📍"
-      },
-      {
-        id: "help",
-        title: "帮助中心",
-        icon: "❓"
-      },
-      {
-        id: "settings",
-        title: "设置",
-        icon: "⚙️"
-      }
-    ]
+
+    funcData: [
+      { label: '我卖出的', iconType: 'sell',    badge: 12 },
+      { label: '我买到的', iconType: 'buy',     badge: 8  },
+      { label: '我的发布', iconType: 'publish', badge: 5  },
+      { label: '我的收藏', iconType: 'heart',   badge: 15 }
+    ],
+
+    profileStats: [
+      { value: '12',  label: '已卖出' },
+      { value: '8',   label: '已买到' },
+      { value: '15',  label: '收藏'   },
+      { value: '4.8', label: '好评'   }
+    ],
+
+    menuItems: [
+      { icon: '', label: '帮助中心', value: '',   last: false },
+      { icon: '⚙️', label: '设置',     value: '',   last: true  }
+    ],
+
+    stars: [true, true, true, true, false]
   },
+
   onLoad() {
-    // 页面加载时的逻辑
-    console.log('Profile page loaded');
+    const sys = wx.getSystemInfoSync()
+    const safeAreaBottom = sys.screenHeight - sys.safeArea.bottom
+    const navHeight = 82 + safeAreaBottom
+    const scrollHeight = sys.windowHeight - navHeight
+
+    this.setData({
+      statusBarHeight: sys.statusBarHeight,
+      safeAreaBottom: safeAreaBottom,
+      scrollHeight: scrollHeight
+    })
+
+    // 进度条入场动画：延迟触发让 CSS transition 生效
+    setTimeout(() => {
+      this.setData({ progressWidth: 75 })
+    }, 600)
 
     // 检查登录状态
     this.checkUserLogin();
@@ -74,6 +77,7 @@ Page({
     // 加载统计数据
     this.loadUserStats();
   },
+  
   onShow() {
     // 页面显示时的逻辑
     this.checkUserLogin();
@@ -123,8 +127,10 @@ Page({
           const cartCount = cartRes.result && cartRes.result.success ? (cartRes.result.count || 0) : 0;
 
           this.setData({
-            'menuItems[2].count': publishedCount,
-            'menuItems[3].count': favoriteCount,
+            'funcData[2].badge': publishedCount,
+            'funcData[3].badge': favoriteCount,
+            'statsData[2].value': favoriteCount.toString(),
+            'profileStats[2].value': favoriteCount.toString(),
             cartCount: cartCount
           });
         });
@@ -142,13 +148,21 @@ Page({
     if (openid && userInfo) {
       // 用户已登录，更新 UI
       this.setData({
-        user: {
+        userInfo: {
           name: userInfo.name || '微信用户',
-          avatar: userInfo.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9maWxlfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=80&w=1080',
           rating: userInfo.rating || 5.0,
-          booksSold: userInfo.booksSold || 0,
-          booksBought: userInfo.booksBought || 0
+          sold: userInfo.booksSold || 0,
+          bought: userInfo.booksBought || 0,
+          collected: userInfo.collected || 0,
+          avatarUrl: userInfo.avatarUrl || userInfo.avatar || ''
         },
+        'profileStats[0].value': (userInfo.booksSold || 0).toString(),
+        'profileStats[1].value': (userInfo.booksBought || 0).toString(),
+        'profileStats[3].value': (userInfo.rating || 5.0).toString(),
+        'statsData[0].value': (userInfo.booksSold || 0).toString(),
+        'statsData[1].value': (userInfo.booksBought || 0).toString(),
+        'funcData[0].badge': userInfo.booksSold || 0,
+        'funcData[1].badge': userInfo.booksBought || 0,
         isLoggedIn: true
       });
     } else {
@@ -156,6 +170,136 @@ Page({
         isLoggedIn: false
       });
     }
+  },
+
+  // ── 底部导航切换 ──
+  onTabChange(e) {
+    const tab = parseInt(e.currentTarget.dataset.tab)
+    this.setData({ activeTab: tab })
+  },
+
+  // ── 核心悬浮按钮 ──
+  onCTA() {
+    wx.showToast({ title: '发现好书！', icon: 'none' })
+  },
+
+  // ── 去浏览书城 ──
+  onExplore() {
+    wx.switchTab({
+      url: '/pages/books/books'
+    })
+  },
+
+  // ── 微信登录 ──
+  onWechatLogin() {
+    // 第一步：确认是否使用微信登录
+    wx.showModal({
+      title: '微信快捷登录',
+      content: '是否使用当前微信账号登录二手商城？登录后可以发布书籍、购买书籍等。',
+      confirmText: '确认登录',
+      cancelText: '取消',
+      confirmColor: '#A8E636',
+      success: (res) => {
+        if (res.confirm) {
+          // 用户确认，进入第二步
+          this.getUserInfoAuth();
+        }
+      }
+    });
+  },
+
+  // 第二步：获取用户信息授权
+  getUserInfoAuth() {
+    // 先获取微信的 openid
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {}
+    }).then(res => {
+      console.log('云函数调用成功:', res);
+
+      if (res.result && res.result.success) {
+        const { openid, userInfo, isNewUser } = res.result;
+
+        // 保存 openid 到本地存储
+        wx.setStorageSync('openid', openid);
+        wx.setStorageSync('userInfo', userInfo);
+
+        // 更新全局数据
+        const app = getApp();
+        if (!app.globalData) {
+          app.globalData = {};
+        }
+        app.globalData.openid = openid;
+        app.globalData.userInfo = {
+          ...userInfo,
+          isLoggedIn: true
+        };
+
+        // 第三步：根据用户类型显示不同的提示
+        if (isNewUser) {
+          // 新用户：提示补充头像和昵称
+          wx.showModal({
+            title: '欢迎来到二手商城',
+            content: '登录成功！是否立即设置您的头像和昵称？',
+            confirmText: '去设置',
+            cancelText: '稍后',
+            confirmColor: '#A8E636',
+            success: (modalRes) => {
+              // 更新页面 UI
+              this.updateUserInfoUI(userInfo);
+
+              if (modalRes.confirm) {
+                // 用户选择去设置，打开编辑窗口
+                this.updateUserInfo();
+              }
+            }
+          });
+        } else {
+          // 老用户：直接显示登录成功
+          this.updateUserInfoUI(userInfo);
+
+          wx.showToast({
+            title: '登录成功，欢迎回来',
+            icon: 'success',
+            duration: 2000
+          });
+        }
+      } else {
+        wx.showToast({
+          title: res.result?.message || '登录失败',
+          icon: 'none'
+        });
+      }
+    }).catch(err => {
+      console.error('登录失败:', err);
+      wx.showToast({
+        title: '登录失败，请检查网络连接',
+        icon: 'none',
+        duration: 2500
+      });
+    });
+  },
+
+  // 更新用户信息 UI
+  updateUserInfoUI(userInfo) {
+    this.setData({
+      userInfo: {
+        name: userInfo.name,
+        rating: userInfo.rating,
+        sold: userInfo.booksSold || 0,
+        bought: userInfo.booksBought || 0,
+        collected: userInfo.collected || 0,
+        avatarUrl: userInfo.avatarUrl || userInfo.avatar || ''
+      },
+      'profileStats[0].value': (userInfo.booksSold || 0).toString(),
+      'profileStats[1].value': (userInfo.booksBought || 0).toString(),
+      'profileStats[3].value': (userInfo.rating || 5.0).toString(),
+      'statsData[0].value': (userInfo.booksSold || 0).toString(),
+      'statsData[1].value': (userInfo.booksBought || 0).toString(),
+      'funcData[0].badge': userInfo.booksSold || 0,
+      'funcData[1].badge': userInfo.booksBought || 0,
+      isLoggedIn: true
+    });
   },
 
   // 更新用户信息（点击头像或昵称）
@@ -211,7 +355,7 @@ Page({
               name: 'updateUserInfo',
               data: {
                 userInfo: {
-                  name: this.data.user.name,
+                  name: this.data.userInfo.name,
                   avatarUrl: fileID
                 }
               }
@@ -222,11 +366,12 @@ Page({
                 // 更新本地存储
                 const userInfo = wx.getStorageSync('userInfo') || {};
                 userInfo.avatar = fileID;
+                userInfo.avatarUrl = fileID; // 同时更新avatarUrl字段
                 wx.setStorageSync('userInfo', userInfo);
-
-                // 更新页面 UI
+                
+                // 更新页面UI中的头像
                 this.setData({
-                  'user.avatar': fileID
+                  'userInfo.avatarUrl': fileID
                 });
 
                 wx.showToast({
@@ -286,8 +431,7 @@ Page({
             name: 'updateUserInfo',
             data: {
               userInfo: {
-                name: newName,
-                avatarUrl: this.data.user.avatar
+                name: newName
               }
             }
           }).then(updateRes => {
@@ -301,7 +445,7 @@ Page({
 
               // 更新页面 UI
               this.setData({
-                'user.name': newName
+                'userInfo.name': newName
               });
 
               wx.showToast({
@@ -380,12 +524,13 @@ Page({
                       const userInfo = wx.getStorageSync('userInfo') || {};
                       userInfo.name = newName;
                       userInfo.avatar = fileID;
+                      userInfo.avatarUrl = fileID; // 同时更新avatarUrl字段
                       wx.setStorageSync('userInfo', userInfo);
 
                       // 更新页面 UI
                       this.setData({
-                        'user.name': newName,
-                        'user.avatar': fileID
+                        'userInfo.name': newName,
+                        'userInfo.avatarUrl': fileID
                       });
 
                       wx.showToast({
@@ -422,188 +567,6 @@ Page({
       }
     });
   },
-  // 菜单点击事件
-  menuItemTap(e) {
-    const id = e.currentTarget.dataset.id;
-    const openid = wx.getStorageSync('openid');
-
-    if (!openid) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
-      });
-      return;
-    }
-
-    switch(id) {
-      case 'sold':
-        // 我卖出的
-        wx.showToast({
-          title: '订单功能开发中',
-          icon: 'none'
-        });
-        break;
-      case 'bought':
-        // 我买到的
-        wx.showToast({
-          title: '订单功能开发中',
-          icon: 'none'
-        });
-        break;
-      case 'published':
-        // 我的发布
-        wx.showToast({
-          title: '我的发布功能开发中',
-          icon: 'none'
-        });
-        break;
-      case 'favorites':
-        // 我的收藏
-        wx.showToast({
-          title: '收藏功能开发中',
-          icon: 'none'
-        });
-        break;
-    }
-  },
-  // 设置项点击事件
-  settingItemTap(e) {
-    const id = e.currentTarget.dataset.id;
-
-    switch(id) {
-      case 'profile':
-        // 个人资料
-        wx.showToast({
-          title: '个人资料功能开发中',
-          icon: 'none'
-        });
-        break;
-      case 'address':
-        // 收货地址
-        wx.showToast({
-          title: '收货地址功能开发中',
-          icon: 'none'
-        });
-        break;
-      case 'help':
-        // 帮助中心
-        wx.showToast({
-          title: '帮助中心功能开发中',
-          icon: 'none'
-        });
-        break;
-      case 'settings':
-        // 设置
-        wx.showToast({
-          title: '设置功能开发中',
-          icon: 'none'
-        });
-        break;
-    }
-  },
-  // 登录/注册按钮点击事件
-  login() {
-    // 第一步：确认是否使用微信登录
-    wx.showModal({
-      title: '微信快捷登录',
-      content: '是否使用当前微信账号登录二手商城？登录后可以发布书籍、购买书籍等。',
-      confirmText: '确认登录',
-      cancelText: '取消',
-      confirmColor: '#FF8FA3',
-      success: (res) => {
-        if (res.confirm) {
-          // 用户确认，进入第二步
-          this.getUserInfoAuth();
-        }
-      }
-    });
-  },
-
-  // 第二步：获取用户信息授权
-  getUserInfoAuth() {
-    // 先获取微信的 openid
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {}
-    }).then(res => {
-      console.log('云函数调用成功:', res);
-
-      if (res.result && res.result.success) {
-        const { openid, userInfo, isNewUser } = res.result;
-
-        // 保存 openid 到本地存储
-        wx.setStorageSync('openid', openid);
-        wx.setStorageSync('userInfo', userInfo);
-
-        // 更新全局数据
-        const app = getApp();
-        if (!app.globalData) {
-          app.globalData = {};
-        }
-        app.globalData.openid = openid;
-        app.globalData.userInfo = {
-          ...userInfo,
-          isLoggedIn: true
-        };
-
-        // 第三步：根据用户类型显示不同的提示
-        if (isNewUser) {
-          // 新用户：提示补充头像和昵称
-          wx.showModal({
-            title: '欢迎来到二手商城',
-            content: '登录成功！是否立即设置您的头像和昵称？',
-            confirmText: '去设置',
-            cancelText: '稍后',
-            confirmColor: '#FF8FA3',
-            success: (modalRes) => {
-              // 更新页面 UI
-              this.updateUserInfoUI(userInfo);
-
-              if (modalRes.confirm) {
-                // 用户选择去设置，打开编辑窗口
-                this.updateUserInfo();
-              }
-            }
-          });
-        } else {
-          // 老用户：直接显示登录成功
-          this.updateUserInfoUI(userInfo);
-
-          wx.showToast({
-            title: '登录成功，欢迎回来',
-            icon: 'success',
-            duration: 2000
-          });
-        }
-      } else {
-        wx.showToast({
-          title: res.result?.message || '登录失败',
-          icon: 'none'
-        });
-      }
-    }).catch(err => {
-      console.error('登录失败:', err);
-      wx.showToast({
-        title: '登录失败，请检查网络连接',
-        icon: 'none',
-        duration: 2500
-      });
-    });
-  },
-
-  // 更新用户信息 UI
-  updateUserInfoUI(userInfo) {
-    this.setData({
-      user: {
-        name: userInfo.name,
-        avatar: userInfo.avatar,
-        rating: userInfo.rating,
-        booksSold: userInfo.booksSold,
-        booksBought: userInfo.booksBought
-      },
-      isLoggedIn: true
-    });
-  },
 
   // 退出登录
   logout() {
@@ -622,12 +585,12 @@ Page({
 
           // 重置页面状态
           this.setData({
-            user: {
+            userInfo: {
               name: '用户',
-              avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9maWxlfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=80&w=1080',
               rating: 4.8,
-              booksSold: 12,
-              booksBought: 8
+              sold: 12,
+              bought: 8,
+              collected: 15
             },
             isLoggedIn: false
           });
@@ -640,6 +603,41 @@ Page({
       }
     });
   },
+
+  // ── 底部导航切换 ──
+  onTabChange(e) {
+    const tab = parseInt(e.currentTarget.dataset.tab)
+    this.setData({ activeTab: tab })
+  },
+
+  // ── 核心悬浮按钮 ──
+  onCTA() {
+    wx.showToast({ title: '发现好书！', icon: 'none' })
+  },
+
+  // ── 去浏览书城 ──
+  onExplore() {
+    wx.switchTab({
+      url: '/pages/books/books'
+    })
+  },
+
+  // ── 卡片跳转 ──
+  onStatTap(e) {
+    const type = e.currentTarget.dataset.type
+    wx.showToast({ title: type, icon: 'none' })
+  },
+
+  onFuncTap(e) {
+    const label = e.currentTarget.dataset.label
+    wx.showToast({ title: label, icon: 'none' })
+  },
+
+  onMenuTap(e) {
+    const label = e.currentTarget.dataset.label
+    wx.showToast({ title: label, icon: 'none' })
+  },
+
   // 跳转到购物车
   goToCart() {
     if (!this.data.isDragging) {

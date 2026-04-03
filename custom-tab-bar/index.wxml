@@ -1,19 +1,22 @@
 <view class="tab-bar">
   <view class="tab-bar-border"></view>
   
-  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{item.text === '发布' ? 'special-wrapper' : ''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab" style="height: 100rpx; display: flex; box-sizing: border-box; left: 0rpx; top: -39rpx">
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{item.text === '发布' ? 'special-wrapper' : ''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab" style="height: 114rpx; display: flex; box-sizing: border-box; left: 1rpx; top: -13rpx; width: 151rpx; position: relative">
     
-    <view wx:if="{{item.text === '发布'}}" class="special-item">
-      <view class="special-icon" style="position: relative; left: 0rpx; top: 15rpx">
-        <text class="scan-icon">〔 〕</text>
+    <view wx:if="{{item.text === '发布'}}" class="special-item" style="height: 168rpx; display: flex; box-sizing: border-box; position: relative; left: 1rpx; top: -57rpx">
+      <view class="special-icon" style="position: relative; left: 0rpx; top: 4rpx; width: 103rpx; display: flex; box-sizing: border-box; height: 99rpx">
+        <text class="scan-icon" style="position: relative; left: 0rpx; top: 13rpx; width: 150rpx; display: block; box-sizing: border-box; height: 88rpx">〔 〕</text>
       </view>
     </view>
 
     <block wx:else>
       <view class="icon-box">
-        <text class="emoji-icon">{{index === 0 ? '🍰' : index === 1 ? '🍔' : index === 3 ? '🍡' : '🍮'}}</text>
+        <image wx:if="{{index === 0}}" src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/shuji.png" class="tab-icon" mode="aspectFit" />
+        <image wx:elif="{{index === 1}}" src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/faxueshuji .png" class="tab-icon" mode="aspectFit" />
+        <image style="position: relative; left: 0rpx; top: -11rpx" wx:elif="{{index === 3}}" src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/icon.png" class="tab-icon" mode="aspectFit" />
+        <image style="width: 80rpx; height: 71rpx; display: block; box-sizing: border-box" wx:else src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/xiangsufeng_shuji.png" class="tab-icon" mode="aspectFit" />
       </view>
-      <view class="tab-text" style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
+      <view class="tab-text" style="color: {{selected === index ? selectedColor : color}}; position: relative; left: 1rpx; top: -4rpx">{{item.text}}</view>
     </block>
     
   </view>

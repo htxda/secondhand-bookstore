@@ -182,65 +182,47 @@ Page({
       success: (uploadRes) => {
         const fileID = uploadRes.fileID;
 
-        // 获取临时访问链接，确保其他用户可以访问
-        wx.cloud.getTempFileURL({
-          fileList: [fileID],
-          success: (res) => {
-            const imageUrl = res.fileList[0].tempFileURL;
+        // 调用云函数发布书籍（直接存储 fileID，不存储临时链接）
+        wx.cloud.callFunction({
+          name: 'book',
+          data: {
+            action: 'publish',
+            title: title.trim(),
+            author: author.trim(),
+            category: subject,
+            subject: subject,
+            condition: condition,
+            price: parseFloat(price),
+            originalPrice: parseFloat(originalPrice) || parseFloat(price),
+            description: description ? description.trim() : '暂无描述',
+            image: fileID  // 存储 cloud:// 格式的 fileID
+          }
+        }).then(res => {
+          this.setData({ isSubmitting: false });
 
-            // 调用云函数发布书籍
-            wx.cloud.callFunction({
-              name: 'book',
-              data: {
-                action: 'publish',
-                data: {
-                  title: title.trim(),
-                  author: author.trim(),
-                  category: subject, // 云函数使用category字段
-                  subject: subject, // 云函数也使用subject字段
-                  condition: condition,
-                  price: parseFloat(price),
-                  originalPrice: parseFloat(originalPrice) || parseFloat(price),
-                  description: description ? description.trim() : '暂无描述',
-                  image: imageUrl
-                }
-              }
-            }).then(res => {
-              this.setData({ isSubmitting: false });
-
-              if (res.result && res.result.success) {
-                wx.showToast({
-                  title: '发布成功',
-                  icon: 'success'
-                });
-                setTimeout(() => {
-                  wx.switchTab({
-                    url: '/pages/index/index'
-                  });
-                }, 1500);
-              } else {
-                wx.showToast({
-                  title: res.result.message || '发布失败',
-                  icon: 'none'
-                });
-              }
-            }).catch(err => {
-              this.setData({ isSubmitting: false });
-              console.error('发布失败:', err);
-              wx.showToast({
-                title: '发布失败，请稍后重试',
-                icon: 'none'
-              });
-            });
-          },
-          fail: (err) => {
-            this.setData({ isSubmitting: false });
-            console.error('获取临时链接失败:', err);
+          if (res.result && res.result.success) {
             wx.showToast({
-              title: '获取图片链接失败',
+              title: '发布成功',
+              icon: 'success'
+            });
+            setTimeout(() => {
+              wx.switchTab({
+                url: '/pages/index/index'
+              });
+            }, 1500);
+          } else {
+            wx.showToast({
+              title: res.result.message || '发布失败',
               icon: 'none'
             });
           }
+        }).catch(err => {
+          this.setData({ isSubmitting: false });
+          console.error('发布失败:', err);
+          wx.showToast({
+            title: '发布失败，请稍后重试',
+            icon: 'none'
+          });
         });
       },
       fail: (uploadErr) => {

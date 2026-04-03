@@ -1,67 +1,250 @@
-<view class="container">
-  <!-- 粉色渐变色标题栏 -->
-  <view class="custom-navbar">
-    <view class="navbar-content">
-      <text class="navbar-title" style="position: relative; left: 0rpx; top: 23rpx">个人中心</text>
-    </view>
-  </view>
-  <!-- User Profile Section -->
-  <view class="profile-section" style="position: relative; left: 0rpx; top: 0rpx; height: 368rpx; display: block; box-sizing: border-box">
-    <view class="user-info" bindtap="updateUserInfo">
-      <image src="{{user.avatar}}" mode="aspectFill" class="user-avatar" />
-      <view class="user-details">
-        <text class="user-name">{{user.name}}</text>
-        <view class="user-rating">
-          <text class="star">⭐</text>
-          <text class="rating-value">{{user.rating}}</text>
+<!-- pages/index/index.wxml -->
+<view class="page-root">
+
+  <!-- ══════════════════════════════════
+       状态栏占位
+  ══════════════════════════════════ -->
+  <view style="height: {{statusBarHeight}}px; background: linear-gradient(135deg, #f8f5f0 0%, #faf7f2 100%); flex-shrink: 0;"></view>
+
+  <!-- ══════════════════════════════════
+       可滚动内容区
+  ══════════════════════════════════ -->
+  <scroll-view
+    class="scroll-area"
+    scroll-y
+    style="height: {{scrollHeight}}px;"
+    show-scrollbar="{{false}}"
+    enhanced="{{true}}"
+  >
+
+    <!-- ── 顶部 Hero 横幅 ── -->
+    <view class="hero-banner">
+      <!-- 装饰圆 -->
+      <view class="hero-deco-circle deco-1"></view>
+      <view class="hero-deco-circle deco-2"></view>
+
+      <!-- 文字内容 -->
+      <view class="hero-content" style="position: relative; left: 1rpx; top: 32rpx">
+        <text class="hero-greeting">欢迎回来，书友 👋</text>
+        <text class="hero-title">今天淘哪本好书？</text>
+        <view
+          class="hero-btn"
+          hover-class="hero-btn--active"
+          hover-stay-time="200"
+          bindtap="onExplore"
+        >
+          <text class="hero-btn-icon">▶</text>
+          <text class="hero-btn-text">去逛逛</text>
         </view>
       </view>
-      <text class="edit-icon" style="position: absolute; left: 653rpx; top: 47rpx">✎</text>
-    </view>
-    <view class="user-stats">
-      <view class="stat-item">
-        <text class="stat-value">{{user.booksSold}}</text>
-        <text class="stat-label">已卖出</text>
-      </view>
-      <view class="stat-divider"></view>
-      <view class="stat-item">
-        <text class="stat-value">{{user.booksBought}}</text>
-        <text class="stat-label">已买到</text>
-      </view>
-    </view>
-  </view>
 
-  <!-- Menu Section -->
-  <view class="menu-section" style="position: relative; left: 2rpx; top: 2rpx">
-    <view class="menu-grid">
-      <view wx:for="{{menuItems}}" wx:key="id" class="menu-item" data-id="{{item.id}}" bindtap="menuItemTap">
-        <text class="menu-icon">{{item.icon}}</text>
-        <text class="menu-title">{{item.title}}</text>
-        <text class="menu-count">{{item.count}}</text>
+      <!-- 卡通人物 -->
+      <image
+        class="hero-student"
+        src="/packageA/images/xueshen.png"
+        mode="heightFix"
+       style="width: 200rpx; display: block; box-sizing: border-box; left: 465rpx; top: 0rpx; position: absolute"></image>
+    </view>
+
+    <!-- ── 数据统计卡片组 ── -->
+    <view class="stats-row">
+      <view
+        wx:for="{{statsData}}"
+        wx:key="iconType"
+        class="stat-card"
+        hover-class="stat-card--hover"
+        hover-stay-time="200"
+        bindtap="onStatTap"
+        data-type="{{item.label}}"
+      >
+        <!-- 书本图标 -->
+        <view class="stat-icon-wrap">
+          <view wx:if="{{item.iconType === 'sell' || item.iconType === 'buy'}}" class="book-icon-mini {{item.iconType}}">
+            <view class="bk-spine {{item.iconType === 'buy' ? 'bk-spine--blue' : ''}}"></view>
+            <view class="bk-body">
+              <view class="bk-line"></view>
+              <view class="bk-line bk-line--short"></view>
+              <view class="bk-line"></view>
+            </view>
+          </view>
+          <view wx:if="{{item.iconType === 'sell'}}" class="arrow-chip arrow-up">↑</view>
+          <view wx:if="{{item.iconType === 'buy'}}"  class="arrow-chip arrow-down">↓</view>
+          <view wx:if="{{item.iconType === 'heart'}}" class="heart-wrap">
+            <text class="heart-char">♥</text>
+          </view>
+        </view>
+
+        <!-- 数值 -->
+        <text class="stat-value">{{item.value}}</text>
+        <!-- 标签 -->
+        <text class="stat-label">{{item.label}}</text>
       </view>
     </view>
-  </view>
 
-  <!-- Settings Section -->
-  <view class="settings-section" style="position: relative; left: 2rpx; top: 13rpx">
-    <view wx:for="{{settingsItems}}" wx:key="id" class="setting-item" data-id="{{item.id}}" bindtap="settingItemTap">
-      <view class="setting-info">
-        <text class="setting-icon">{{item.icon}}</text>
-        <text class="setting-title">{{item.title}}</text>
+    <!-- ── 今日阅读目标进度 ── -->
+    <view class="card goal-card">
+      <!-- 顶部光泽条 -->
+      <view class="card-shine"></view>
+
+      <view class="goal-header">
+        <view class="goal-title-wrap">
+          <text class="goal-date-tag">TODAY</text>
+          <text class="goal-title">今日阅读目标</text>
+        </view>
+        <view class="goal-pct-badge">
+          <text class="goal-pct-text">75%</text>
+        </view>
       </view>
-      <text class="setting-arrow">→</text>
-    </view>
-  </view>
 
-  <!-- Logout Button -->
-  <view class="logout-section">
-    <view wx:if="{{!isLoggedIn}}" class="logout-button" bindtap="login">
-      <text class="logout-text">微信一键登录</text>
+      <!-- 进度条 -->
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{progressWidth}}%">
+          <view class="progress-glow-tip"></view>
+        </view>
+      </view>
+
+      <!-- 状态文字 -->
+      <view class="goal-footer">
+        <view class="goal-status-item">
+          <view class="status-dot dot-lime"></view>
+          <text class="goal-status-text">已完成 <text class="text-gray">4/5 本</text></text>
+        </view>
+        <view class="goal-status-item">
+          <view class="status-dot dot-dark"></view>
+          <text class="goal-status-text">未完成 <text class="text-lime">做笔记</text></text>
+        </view>
+      </view>
     </view>
-    <view wx:else class="logout-button logout-button-exit" bindtap="logout" style="position: relative; left: -1rpx; top: 22rpx">
-      <text class="logout-text">退出登录</text>
+
+    <!-- ── 功能入口 2×2 宫格 ── -->
+    <view class="func-grid">
+      <view
+        wx:for="{{funcData}}"
+        wx:key="label"
+        class="func-card"
+        hover-class="func-card--hover"
+        hover-stay-time="200"
+        bindtap="onFuncTap"
+        data-label="{{item.label}}"
+      >
+        <!-- 顶部光泽 -->
+        <view class="card-shine"></view>
+
+        <!-- 图标区 -->
+        <view class="func-icon-area">
+          <!-- 书本类图标 -->
+          <view wx:if="{{item.iconType === 'sell' || item.iconType === 'buy' || item.iconType === 'publish'}}" class="book-icon-lg">
+            <view class="bk-spine-lg {{item.iconType === 'buy' ? 'bk-spine--blue' : ''}}"></view>
+            <view class="bk-body-lg">
+              <view class="bk-line-lg"></view>
+              <view class="bk-line-lg bk-line--short"></view>
+              <view class="bk-line-lg"></view>
+            </view>
+          </view>
+          <view wx:if="{{item.iconType === 'sell'}}"    class="func-arrow-chip up">↑</view>
+          <view wx:if="{{item.iconType === 'buy'}}"     class="func-arrow-chip down">↓</view>
+          <view wx:if="{{item.iconType === 'publish'}}" class="func-arrow-chip pub">↑</view>
+
+          <!-- 收藏心形 -->
+          <view wx:if="{{item.iconType === 'heart'}}" class="heart-lg-wrap">
+            <text class="heart-lg-char">♥</text>
+          </view>
+        </view>
+
+        <!-- 标签 -->
+        <text class="func-label">{{item.label}}</text>
+
+        <!-- 角标 -->
+        <view wx:if="{{item.badge}}" class="func-badge">{{item.badge}}</view>
+      </view>
     </view>
-  </view>
+
+    <!-- ── 个人资料卡片 ── -->
+    <view class="card profile-card">
+      <view class="card-shine"></view>
+
+      <!-- 用户信息头部 -->
+      <view class="profile-header">
+        <!-- 头像 -->
+        <view class="avatar-wrap">
+          <image wx:if="{{userInfo.avatarUrl}}" class="avatar-image" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+          <text wx:else class="avatar-char">书</text>
+          <view class="avatar-ring"></view>
+        </view>
+
+        <!-- 姓名 + 评分 -->
+        <view class="profile-info">
+          <text class="profile-name">{{isLoggedIn ? userInfo.name : '未登录'}}</text>
+          <view class="stars-row">
+            <text wx:for="{{stars}}" wx:key="index" class="star {{item ? 'star--on' : 'star--off'}}">★</text>
+            <text class="star-score">{{userInfo.rating}}</text>
+          </view>
+        </view>
+
+        <!-- 编辑按钮 -->
+        <view wx:if="{{isLoggedIn}}" class="edit-btn" hover-class="edit-btn--hover" hover-stay-time="150" bindtap="updateUserInfo">
+          <text class="edit-icon">✏️</text>
+        </view>
+      </view>
+
+      <!-- 数据统计行 -->
+      <view class="profile-stats-row">
+        <view
+          wx:for="{{profileStats}}"
+          wx:key="label"
+          class="profile-stat-cell {{index < profileStats.length - 1 ? 'has-border' : ''}}"
+        >
+          <text class="profile-stat-value">{{item.value}}</text>
+          <text class="profile-stat-label">{{item.label}}</text>
+        </view>
+      </view>
+
+      <!-- 菜单列表 -->
+      <view class="menu-list">
+        <view
+          wx:for="{{menuItems}}"
+          wx:key="label"
+          class="menu-row {{item.last ? '' : 'menu-row--bordered'}}"
+          hover-class="menu-row--hover"
+          hover-stay-time="150"
+          bindtap="onMenuTap"
+          data-label="{{item.label}}"
+        >
+          <view wx:if="{{item.icon}}" class="menu-icon-wrap">
+            <text class="menu-icon-emoji">{{item.icon}}</text>
+          </view>
+          <text class="menu-row-label">{{item.label}}</text>
+          <text wx:if="{{item.value}}" class="menu-row-value">{{item.value}}</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ── 微信登录/退出按钮 ── -->
+    <view class="wechat-login-wrap">
+      <view
+        wx:if="{{!isLoggedIn}}"
+        class="wechat-btn"
+        hover-class="wechat-btn--hover"
+        hover-stay-time="200"
+        bindtap="onWechatLogin"
+      >
+        <text class="wechat-btn-text">微信一键登录</text>
+      </view>
+      <view
+        wx:else
+        class="wechat-btn"
+        hover-class="wechat-btn--hover"
+        hover-stay-time="200"
+        bindtap="logout"
+      >
+        <text class="wechat-btn-text">退出登录</text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view style="height: 24rpx;"></view>
+  </scroll-view>
 
   <!-- Shopping Cart Floating Button -->
   <view
@@ -75,4 +258,5 @@
     <text class="cart-icon">🛒</text>
     <text class="cart-badge">{{cartCount || 0}}</text>
   </view>
+
 </view>

@@ -26,12 +26,16 @@
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "value": "dist/**",
+        "type": "file"
+      }
+    ],
     "include": []
   },
   "appid": "wx53bf3111435a181c",
   "editorSetting": {},
   "cloudfunctionRoot": "cloudfunctions/",
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "libVersion": "3.14.2"
 }

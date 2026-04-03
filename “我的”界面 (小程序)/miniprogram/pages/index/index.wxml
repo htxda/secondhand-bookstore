@@ -1,0 +1,319 @@
+<!-- pages/index/index.wxml -->
+<view class="page-root">
+
+  <!-- ══════════════════════════════════
+       状态栏占位
+  ══════════════════════════════════ -->
+  <view style="height: {{statusBarHeight}}px; background: transparent; flex-shrink: 0;"></view>
+
+  <!-- ══════════════════════════════════
+       可滚动内容区
+  ══════════════════════════════════ -->
+  <scroll-view
+    class="scroll-area"
+    scroll-y
+    style="height: {{scrollHeight}}px;"
+    show-scrollbar="{{false}}"
+    enhanced="{{true}}"
+  >
+
+    <!-- ── 顶部 Hero 横幅 ── -->
+    <view class="hero-banner">
+      <!-- 装饰圆 -->
+      <view class="hero-deco-circle deco-1"></view>
+      <view class="hero-deco-circle deco-2"></view>
+
+      <!-- 文字内容 -->
+      <view class="hero-content">
+        <text class="hero-greeting">欢迎回来，书友 👋</text>
+        <text class="hero-title">今天淘哪本好书？</text>
+        <view
+          class="hero-btn"
+          hover-class="hero-btn--active"
+          hover-stay-time="200"
+          bindtap="onExplore"
+        >
+          <text class="hero-btn-icon">▶</text>
+          <text class="hero-btn-text">去逛逛</text>
+        </view>
+      </view>
+
+      <!-- 卡通人物（将图片放置于 /miniprogram/images/student.png） -->
+      <image
+        class="hero-student"
+        src="/images/student.png"
+        mode="heightFix"
+      ></image>
+    </view>
+
+    <!-- ── 数据统计卡片组 ── -->
+    <view class="stats-row">
+      <view
+        wx:for="{{statsData}}"
+        wx:key="iconType"
+        class="stat-card"
+        hover-class="stat-card--hover"
+        hover-stay-time="200"
+        bindtap="onStatTap"
+        data-type="{{item.label}}"
+      >
+        <!-- 书本图标 -->
+        <view class="stat-icon-wrap">
+          <view wx:if="{{item.iconType === 'sell' || item.iconType === 'buy'}}" class="book-icon-mini {{item.iconType}}">
+            <view class="bk-spine {{item.iconType === 'buy' ? 'bk-spine--blue' : ''}}"></view>
+            <view class="bk-body">
+              <view class="bk-line"></view>
+              <view class="bk-line bk-line--short"></view>
+              <view class="bk-line"></view>
+            </view>
+          </view>
+          <view wx:if="{{item.iconType === 'sell'}}" class="arrow-chip arrow-up">↑</view>
+          <view wx:if="{{item.iconType === 'buy'}}"  class="arrow-chip arrow-down">↓</view>
+          <view wx:if="{{item.iconType === 'heart'}}" class="heart-wrap">
+            <text class="heart-char">♥</text>
+          </view>
+        </view>
+
+        <!-- 数值 -->
+        <text class="stat-value">{{item.value}}</text>
+        <!-- 标签 -->
+        <text class="stat-label">{{item.label}}</text>
+      </view>
+    </view>
+
+    <!-- ── 今日阅读目标进度 ── -->
+    <view class="card goal-card">
+      <!-- 顶部光泽条 -->
+      <view class="card-shine"></view>
+
+      <view class="goal-header">
+        <view class="goal-title-wrap">
+          <text class="goal-date-tag">TODAY</text>
+          <text class="goal-title">今日阅读目标</text>
+        </view>
+        <view class="goal-pct-badge">
+          <text class="goal-pct-text">75%</text>
+        </view>
+      </view>
+
+      <!-- 进度条 -->
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{progressWidth}}%">
+          <view class="progress-glow-tip"></view>
+        </view>
+      </view>
+
+      <!-- 状态文字 -->
+      <view class="goal-footer">
+        <view class="goal-status-item">
+          <view class="status-dot dot-lime"></view>
+          <text class="goal-status-text">已完成 <text class="text-gray">4/5 本</text></text>
+        </view>
+        <view class="goal-status-item">
+          <view class="status-dot dot-dark"></view>
+          <text class="goal-status-text">未完成 <text class="text-lime">做笔记</text></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ── 功能入口 2×2 宫格 ── -->
+    <view class="func-grid">
+      <view
+        wx:for="{{funcData}}"
+        wx:key="label"
+        class="func-card"
+        hover-class="func-card--hover"
+        hover-stay-time="200"
+        bindtap="onFuncTap"
+        data-label="{{item.label}}"
+      >
+        <!-- 顶部光泽 -->
+        <view class="card-shine"></view>
+
+        <!-- 图标区 -->
+        <view class="func-icon-area">
+          <!-- 书本类图标 -->
+          <view wx:if="{{item.iconType === 'sell' || item.iconType === 'buy' || item.iconType === 'publish'}}" class="book-icon-lg">
+            <view class="bk-spine-lg {{item.iconType === 'buy' ? 'bk-spine--blue' : ''}}"></view>
+            <view class="bk-body-lg">
+              <view class="bk-line-lg"></view>
+              <view class="bk-line-lg bk-line--short"></view>
+              <view class="bk-line-lg"></view>
+            </view>
+          </view>
+          <view wx:if="{{item.iconType === 'sell'}}"    class="func-arrow-chip up">↑</view>
+          <view wx:if="{{item.iconType === 'buy'}}"     class="func-arrow-chip down">↓</view>
+          <view wx:if="{{item.iconType === 'publish'}}" class="func-arrow-chip pub">↑</view>
+
+          <!-- 收藏心形 -->
+          <view wx:if="{{item.iconType === 'heart'}}" class="heart-lg-wrap">
+            <text class="heart-lg-char">♥</text>
+          </view>
+        </view>
+
+        <!-- 标签 -->
+        <text class="func-label">{{item.label}}</text>
+
+        <!-- 角标 -->
+        <view wx:if="{{item.badge}}" class="func-badge">{{item.badge}}</view>
+      </view>
+    </view>
+
+    <!-- ── 个人资料卡片 ── -->
+    <view class="card profile-card">
+      <view class="card-shine"></view>
+
+      <!-- 用户信息头部 -->
+      <view class="profile-header">
+        <!-- 头像 -->
+        <view class="avatar-wrap">
+          <text class="avatar-char">书</text>
+          <view class="avatar-ring"></view>
+        </view>
+
+        <!-- 姓名 + 评分 -->
+        <view class="profile-info">
+          <text class="profile-name">{{userInfo.name}}</text>
+          <view class="stars-row">
+            <text wx:for="{{stars}}" wx:key="index" class="star {{item ? 'star--on' : 'star--off'}}">★</text>
+            <text class="star-score">{{userInfo.rating}}</text>
+          </view>
+        </view>
+
+        <!-- 编辑按钮 -->
+        <view class="edit-btn" hover-class="edit-btn--hover" hover-stay-time="150">
+          <text class="edit-icon">✏️</text>
+        </view>
+      </view>
+
+      <!-- 数据统计行 -->
+      <view class="profile-stats-row">
+        <view
+          wx:for="{{profileStats}}"
+          wx:key="label"
+          class="profile-stat-cell {{index < profileStats.length - 1 ? 'has-border' : ''}}"
+        >
+          <text class="profile-stat-value">{{item.value}}</text>
+          <text class="profile-stat-label">{{item.label}}</text>
+        </view>
+      </view>
+
+      <!-- 菜单列表 -->
+      <view class="menu-list">
+        <view
+          wx:for="{{menuItems}}"
+          wx:key="label"
+          class="menu-row {{item.last ? '' : 'menu-row--bordered'}}"
+          hover-class="menu-row--hover"
+          hover-stay-time="150"
+          bindtap="onMenuTap"
+          data-label="{{item.label}}"
+        >
+          <view class="menu-icon-wrap">
+            <text class="menu-icon-emoji">{{item.icon}}</text>
+          </view>
+          <text class="menu-row-label">{{item.label}}</text>
+          <text wx:if="{{item.value}}" class="menu-row-value">{{item.value}}</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ── 微信登录按钮 ── -->
+    <view class="wechat-login-wrap">
+      <view
+        class="wechat-btn"
+        hover-class="wechat-btn--hover"
+        hover-stay-time="200"
+        bindtap="onWechatLogin"
+      >
+        <text class="wechat-emoji">💬</text>
+        <text class="wechat-btn-text">微信一键登录</text>
+      </view>
+    </view>
+
+    <!-- 底部留白 -->
+    <view style="height: 24rpx;"></view>
+  </scroll-view>
+
+  <!-- ══════════════════════════════════
+       底部导航栏（固定定位）
+  ══════════════════════════════════ -->
+  <view class="bottom-nav" style="padding-bottom: {{safeAreaBottom}}px;">
+
+    <!-- 首页 -->
+    <view
+      class="nav-item"
+      bindtap="onTabChange"
+      data-tab="0"
+    >
+      <view class="nav-icon-home">
+        <view class="house-roof {{activeTab === 0 ? 'active' : ''}}"></view>
+        <view class="house-body {{activeTab === 0 ? 'active' : ''}}"></view>
+        <view class="house-door {{activeTab === 0 ? 'active' : ''}}"></view>
+      </view>
+      <text class="nav-label {{activeTab === 0 ? 'nav-label--active' : ''}}">首页</text>
+    </view>
+
+    <!-- 书城 -->
+    <view
+      class="nav-item"
+      bindtap="onTabChange"
+      data-tab="1"
+    >
+      <view class="nav-icon-book">
+        <view class="nb-spine {{activeTab === 1 ? 'active' : ''}}"></view>
+        <view class="nb-body {{activeTab === 1 ? 'active' : ''}}">
+          <view class="nb-line {{activeTab === 1 ? 'active' : ''}}"></view>
+          <view class="nb-line nb-line--short {{activeTab === 1 ? 'active' : ''}}"></view>
+        </view>
+        <view class="nb-back {{activeTab === 1 ? 'active' : ''}}"></view>
+      </view>
+      <text class="nav-label {{activeTab === 1 ? 'nav-label--active' : ''}}">书城</text>
+    </view>
+
+    <!-- 核心悬浮按钮 -->
+    <view class="nav-center-wrap">
+      <view
+        class="cta-btn"
+        hover-class="cta-btn--hover"
+        hover-stay-time="150"
+        bindtap="onCTA"
+      >
+        <text class="cta-icon">▶</text>
+      </view>
+    </view>
+
+    <!-- 购物车 -->
+    <view
+      class="nav-item"
+      bindtap="onTabChange"
+      data-tab="3"
+    >
+      <view class="nav-icon-cart">
+        <view class="cart-handle {{activeTab === 3 ? 'active' : ''}}"></view>
+        <view class="cart-body {{activeTab === 3 ? 'active' : ''}}"></view>
+        <view class="cart-wheels">
+          <view class="cart-wheel {{activeTab === 3 ? 'active' : ''}}"></view>
+          <view class="cart-wheel {{activeTab === 3 ? 'active' : ''}}"></view>
+        </view>
+      </view>
+      <text class="nav-label {{activeTab === 3 ? 'nav-label--active' : ''}}">购物车</text>
+    </view>
+
+    <!-- 我的 -->
+    <view
+      class="nav-item"
+      bindtap="onTabChange"
+      data-tab="4"
+    >
+      <view class="nav-icon-user">
+        <view class="user-head {{activeTab === 4 ? 'active' : ''}}"></view>
+        <view class="user-shoulder {{activeTab === 4 ? 'active' : ''}}"></view>
+      </view>
+      <text class="nav-label {{activeTab === 4 ? 'nav-label--active' : ''}}">我的</text>
+    </view>
+
+  </view>
+
+</view>

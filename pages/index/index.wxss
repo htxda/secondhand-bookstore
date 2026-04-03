@@ -276,14 +276,17 @@
 }
 
 .book-card {
-  background: linear-gradient(145deg, #fef3c7 0%, #ffffff 100%);
-  border: 6rpx solid #10b981;
-  border-radius: 12rpx;
-  padding: 24rpx;
-  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15), 0 3rpx 8rpx rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15rpx);
+  -webkit-backdrop-filter: blur(15rpx);
+  border: 2rpx solid rgba(16, 185, 129, 0.4);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.15), 0 6rpx 16rpx rgba(0, 0, 0, 0.1), 0 2rpx 8rpx rgba(0, 0, 0, 0.05), inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  transform: translateY(0);
 }
 
 .book-card::before {
@@ -297,8 +300,10 @@
 }
 
 .book-card:active {
-  transform: translateY(-4rpx) scale(1.02);
-  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.15);
+  transform: translateY(-8rpx) scale(1.05);
+  box-shadow: 0 16rpx 40rpx rgba(0, 0, 0, 0.2), 0 8rpx 20rpx rgba(0, 0, 0, 0.15), 0 4rpx 12rpx rgba(0, 0, 0, 0.1), inset 0 1rpx 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(16, 185, 129, 0.6);
 }
 
 .book-card-content {
@@ -372,15 +377,18 @@
 }
 
 .activity-card-horizontal {
-  background: linear-gradient(145deg, #fef3c7 0%, #ffffff 100%);
-  border: 6rpx solid #f59e0b;
-  border-radius: 12rpx;
-  padding: 28rpx;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15rpx);
+  -webkit-backdrop-filter: blur(15rpx);
+  border: 2rpx solid rgba(245, 158, 11, 0.4);
+  border-radius: 20rpx;
+  padding: 36rpx;
   min-width: 300rpx;
-  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15), 0 3rpx 8rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.15), 0 6rpx 16rpx rgba(0, 0, 0, 0.1), 0 2rpx 8rpx rgba(0, 0, 0, 0.05), inset 0 1rpx 0 rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  transform: translateY(0);
 }
 
 .activity-card-horizontal::before {
@@ -394,8 +402,10 @@
 }
 
 .activity-card-horizontal:active {
-  transform: translateY(-4rpx) scale(1.02);
-  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.15);
+  transform: translateY(-8rpx) scale(1.05);
+  box-shadow: 0 16rpx 40rpx rgba(0, 0, 0, 0.2), 0 8rpx 20rpx rgba(0, 0, 0, 0.15), 0 4rpx 12rpx rgba(0, 0, 0, 0.1), inset 0 1rpx 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(245, 158, 11, 0.6);
 }
 
 .activity-card-content-horizontal {

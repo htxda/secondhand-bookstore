@@ -1,17 +1,15 @@
-<!-- books.wxml -->
 <view class="container">
-  <!-- 粉色渐变色标题栏 -->
-  <view class="custom-navbar">
-    <view class="navbar-content">
-      <text class="navbar-title">书籍</text>
+  <view class="hero-card">
+    <view class="hero-text">
+      <text class="greeting">欢迎光临藏书库</text>
+      <text class="headline">今天淘哪本好书？</text>
     </view>
-  </view>
-  <!-- Search Bar -->
-  <view class="search-section">
+    
     <view class="search-bar">
       <text class="search-icon">🔍</text>
       <input 
         placeholder="搜索书名、作者、科目..." 
+        placeholder-class="search-placeholder"
         class="search-input" 
         value="{{searchKeyword}}"
         bindinput="searchInput"
@@ -20,42 +18,37 @@
     </view>
   </view>
 
-  <!-- Books List -->
   <view class="books-section">
-    <view class="section-header">
-      <text class="section-title">全部书籍</text>
-    </view>
-    <view class="books-container">
-      <view wx:for="{{books}}" wx:key="_id" class="book-item" data-id="{{item._id}}" bindtap="bookTap">
-        <image src="{{imageUrls[index % imageUrls.length]}}" mode="aspectFill" class="book-image" />
+    <view class="books-grid">
+      <view wx:for="{{books}}" wx:key="_id" class="book-card" data-id="{{item._id}}" bindtap="bookTap">
+        <image src="{{item.images[0] || item.image || 'https://via.placeholder.com/300x400.png?text=Book'}}" mode="aspectFill" class="book-image" />
         <view class="book-info">
           <text class="book-title">{{item.title}}</text>
           <text class="book-author">{{item.author}}</text>
+          
           <view class="book-tags">
-            <text class="tag condition-tag">{{item.condition}}</text>
-            <text class="tag category-tag">{{item.category}}</text>
+            <text class="tag condition-tag">{{item.condition || '九成新'}}</text>
+            <text class="tag category-tag">{{item.category || '分类'}}</text>
           </view>
+          
           <view class="book-price">
-            <view class="price-info">
-              <text class="current-price">¥{{item.price}}</text>
-              <text class="original-price">¥{{item.originalPrice}}</text>
-            </view>
+            <text class="current-price">¥{{item.price}}</text>
+            <text class="original-price" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
           </view>
         </view>
       </view>
     </view>
   </view>
 
-  <!-- Shopping Cart Floating Button -->
   <view
     class="cart-floating-button"
     bindtap="goToCart"
     bindtouchstart="touchStart"
     bindtouchmove="touchMove"
     bindtouchend="touchEnd"
-    style="top: {{cartButtonTop || '1189rpx'}}; left: {{cartButtonLeft || '635rpx'}}; position: fixed"
+    style="top: 1302rpx; left: 627rpx; position: fixed"
   >
     <text class="cart-icon">🛒</text>
-    <text class="cart-badge">{{cartCount || 0}}</text>
+    <text class="cart-badge" wx:if="{{cartCount > 0}}">{{cartCount}}</text>
   </view>
 </view>

@@ -299,6 +299,20 @@ Page({
             icon: 'none'
           });
         }
+      } else if (res.result && res.result.needLogin) {
+        wx.showModal({
+          title: '提示',
+          content: '请先登录后再操作',
+          confirmText: '去登录',
+          confirmColor: '#FF8FA3',
+          success: (modalRes) => {
+            if (modalRes.confirm) {
+              wx.switchTab({
+                url: '/pages/profile/profile'
+              });
+            }
+          }
+        });
       } else {
         wx.showToast({
           title: res.result.message || '删除失败',
@@ -350,6 +364,25 @@ Page({
           Promise.all(deletePromises).then(results => {
             wx.hideLoading();
 
+            // 检查是否需要登录
+            const needLoginResult = results.find(res => res.result && res.result.needLogin);
+            if (needLoginResult) {
+              wx.showModal({
+                title: '提示',
+                content: '请先登录后再操作',
+                confirmText: '去登录',
+                confirmColor: '#FF8FA3',
+                success: (modalRes) => {
+                  if (modalRes.confirm) {
+                    wx.switchTab({
+                      url: '/pages/profile/profile'
+                    });
+                  }
+                }
+              });
+              return;
+            }
+
             // 统计成功和失败的数量
             const successCount = results.filter(res => res.result && res.result.success).length;
 
@@ -400,9 +433,12 @@ Page({
     });
   },
 
-  // 返回上一页
-  goBack() {
-    wx.navigateBack();
+  // 跳转到书籍详情
+  goToBookDetail(e) {
+    const bookId = e.currentTarget.dataset.bookId;
+    wx.navigateTo({
+      url: '/packageA/pages/bookDetail/bookDetail?id=' + bookId
+    });
   },
 
   // 去逛逛
@@ -412,11 +448,8 @@ Page({
     });
   },
 
-  // 跳转到书籍详情
-  goToBookDetail(e) {
-    const bookId = e.currentTarget.dataset.bookId;
-    wx.navigateTo({
-      url: '/pages/bookDetail/bookDetail?id=' + bookId
-    });
+  // 返回上一页
+  goBack() {
+    wx.navigateBack();
   }
 });

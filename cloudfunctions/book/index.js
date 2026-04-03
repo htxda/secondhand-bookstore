@@ -11,11 +11,11 @@ exports.main = async (event, context) => {
   try {
     // 获取微信上下文
     const { OPENID } = cloud.getWXContext()
+  
+    // 直接从 event 解构参数
+    const { action, bookId, category, keyword, status, limit, title, author, subject, condition, price, originalPrice, description, image } = event
 
-    // 获取操作类型
-    const { action, data } = event
-
-    console.log('书籍操作:', { OPENID, action, data })
+    console.log('书籍操作:', { OPENID, action, bookId, category, keyword, status, limit })
 
     // 初始化数据库
     const db = cloud.database()
@@ -24,7 +24,6 @@ exports.main = async (event, context) => {
     switch (action) {
       // 发布书籍
       case 'publish': {
-        const { title, author, category, subject, condition, price, originalPrice, description, image } = data
 
         if (!title || !price || !image) {
           return {
@@ -74,16 +73,20 @@ exports.main = async (event, context) => {
 
       // 获取书籍列表
       case 'getList': {
-        const { category, keyword, status = 'available', limit } = data
+        console.log('getList params:', { category, keyword, status, limit });
 
         let query = db.collection('books')
 
         // 添加状态过滤
-        query = query.where({ status: status })
+        query = query.where({ status: status || 'available' })
 
-        // 添加分类过滤（注意：使用 subject 字段）
+        // 添加分类过滤（同时查询 category 和 subject 字段）
         if (category && category !== 'all') {
-          query = query.where({ subject: category })
+          console.log('Adding category filter:', category);
+          query = query.where(_.or([
+            { category: category },
+            { subject: category }
+          ]))
         }
 
         // 添加关键词搜索（搜索多个字段）
@@ -125,8 +128,7 @@ exports.main = async (event, context) => {
 
       // 获取书籍详情
       case 'getDetail': {
-        console.log('getDetail data:', data);
-        const { bookId } = data || { bookId: null };
+        console.log('getDetail params:', { bookId });
         console.log('getDetail bookId:', bookId);
 
         if (!bookId) {
@@ -137,6 +139,8 @@ exports.main = async (event, context) => {
         }
 
         const res = await db.collection('books').doc(bookId).get()
+        
+        console.log('getDetail result:', res.data);
 
         if (!res.data) {
           return {
@@ -146,22 +150,30 @@ exports.main = async (event, context) => {
         }
 
         // 获取卖家信息
-        const sellerRes = await db.collection('users').where({
-          _openid: res.data.sellerId
-        }).get()
+        let seller = null;
+        if (res.data.sellerId) {
+          try {
+            const sellerRes = await db.collection('users').where({
+              _openid: res.data.sellerId
+            }).get()
+            console.log('seller result:', sellerRes.data);
+            seller = sellerRes.data[0] || null;
+          } catch (err) {
+            console.error('获取卖家信息失败:', err);
+          }
+        }
 
         return {
           success: true,
           data: {
             ...res.data,
-            seller: sellerRes.data[0] || null
+            seller: seller
           }
         }
       }
 
       // 获取我的发布
       case 'getMyBooks': {
-        const { status } = data
 
         let query = db.collection('books').where({
           _openid: OPENID
@@ -181,7 +193,6 @@ exports.main = async (event, context) => {
 
       // 更新书籍状态（下架）
       case 'updateStatus': {
-        const { bookId, status } = data
 
         await db.collection('books').doc(bookId).update({
           data: {
@@ -198,7 +209,6 @@ exports.main = async (event, context) => {
 
       // 删除书籍
       case 'delete': {
-        const { bookId } = data
 
         await db.collection('books').doc(bookId).remove()
 

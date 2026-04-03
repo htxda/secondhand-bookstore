@@ -3,12 +3,27 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100rpx;
-    background: white;
+    height: 115rpx;
+    background: transparent;
     display: flex;
-    padding-bottom: env(safe-area-inset-bottom);
-    border-radius: 55rpx 55rpx 0 0;
+    padding-bottom: 0;
+    padding-top:25rpx;
+    box-shadow: none;
+    border-top: none;
+  }
+  
+  .tab-bar::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0rpx;
+    right: 0rpx;
+    height: 135rpx;
+    background: white;
+    border-radius: 60rpx 60rpx 0 0;
     box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+    border-top: 1rpx solid #e0e0e0;
+    z-index: -1;
   }
   
   .tab-bar-item {
@@ -21,13 +36,37 @@
   }
   
   .icon-box {
-    font-size: 59rpx;
     margin-bottom: 4rpx;
+    width: 140rpx;
+    height: 140rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .tab-icon {
+    width: 85rpx;
+    height: 85rpx;
+    opacity: 0.6;
+    transition: all 0.3s ease;
   }
   
   .tab-text {
-    font-size: 25rpx;
+    font-size: 22rpx;
     font-weight: 500;
+    color: #666666;
+    transition: all 0.3s ease;
+  }
+  
+  /* 选中状态 */
+  .tab-bar-item.active .tab-icon {
+    opacity: 1;
+    color: #CCFF00;
+  }
+  
+  .tab-bar-item.active .tab-text {
+    color: #CCFF00;
+    font-weight: 600;
   }
   
   /* 中间凸起按钮的容器 */
@@ -51,15 +90,17 @@
   .special-icon {
     width: 100rpx;
     height: 100rpx;
-    background: linear-gradient(135deg, #a8a297, #8e887d); /* 仿图中的灰色渐变 */
+    background: linear-gradient(135deg, #CCFF00 0%, #99CC00 100%);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4rpx 16rpx rgba(204, 255, 0, 0.3);
   }
   
   .scan-icon {
-    color: white;
-    font-size: 44rpx;
+    color: #ffffff;
+    font-size: 40rpx;
     font-weight: bold;
+    display: block;
   }

@@ -1,0 +1,17 @@
+/* app.wxss — 全局样式 */
+page {
+  background-color: #000000;
+  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 全局颜色变量 */
+/* 主色：柠檬绿 #A8E636  */
+/* 卡片背景 #181818       */
+/* 浅灰文字 #B0B0B0       */
+/* 深灰底色 #2D2D2D       */

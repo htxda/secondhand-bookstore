@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTitleText": "二手书",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#000000",
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,23 +1,22 @@
-<!-- components/custom-tab-bar/index.wxml -->
-<view class="tab-bar-container">
-  <view class="tab-bar-item {{selected === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0" data-path="/pages/index/index">
-    <view class="tab-bar-icon">🏠</view>
-    <view class="tab-bar-text">首页</view>
-  </view>
+<view class="tab-bar">
   
-  <view class="tab-bar-item {{selected === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1" data-path="/pages/books/books">
-    <view class="tab-bar-icon">📚</view>
-    <view class="tab-bar-text">书籍</view>
-  </view>
-  
-  <view class="tab-bar-publish">
-    <view class="publish-button" bindtap="switchTab" data-index="2" data-path="/pages/publish/publish">
-      <view class="publish-icon">+</view>
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item {{selected === index ? 'active' : ''}} {{item.text === '发布' ? 'special-wrapper' : ''}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+    
+    <view wx:if="{{item.text === '发布'}}" class="special-item">
+      <view class="special-icon">
+        <text class="scan-icon">〔 〕</text>
+      </view>
     </view>
-  </view>
-  
-  <view class="tab-bar-item {{selected === 3 ? 'active' : ''}}" bindtap="switchTab" data-index="3" data-path="/pages/profile/profile">
-    <view class="tab-bar-icon">👤</view>
-    <view class="tab-bar-text">我的</view>
+
+    <block wx:else>
+      <view class="icon-box">
+        <image wx:if="{{index === 0}}" src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/shuji.png" class="tab-icon" mode="aspectFit" />
+        <image wx:elif="{{index === 1}}" src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/faxueshuji .png" class="tab-icon" mode="aspectFit" />
+        <image wx:elif="{{index === 3}}" src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/icon.png" class="tab-icon" mode="aspectFit" />
+        <image wx:else src="/packageA/images/icon_s31ujvm56je/icon_71nj405rmqb/xiangsufeng_shuji.png" class="tab-icon" mode="aspectFit" />
+      </view>
+      <view class="tab-text">{{item.text}}</view>
+    </block>
+    
   </view>
 </view>

@@ -45,11 +45,11 @@
       },
       {
         "pagePath": "pages/publish/publish",
-        "text": "购物车"
+        "text": "发布"
       },
       {
         "pagePath": "pages/cart/cart",
-        "text": "关注"
+        "text": "购物车"
       },
       {
         "pagePath": "pages/profile/profile",
