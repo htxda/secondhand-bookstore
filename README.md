@@ -60,3 +60,8 @@ git clone https://github.com/htxda/secondhand-bookstore.git
 ---
 
 *原始 Figma 设计稿*: https://www.figma.com/design/pYtrD6S694HgiboGCQXl8i/二手教材交易小程序
+<img width="530" height="1164" alt="7657204e3e8a03dd8b6317c3eea69c99" src="https://github.com/user-attachments/assets/f0c7f7bf-645c-44ad-84db-068b912b7233" />
+<img width="538" height="1157" alt="692a5c8b7038b5ae73f95570baae8b4b" src="https://github.com/user-attachments/assets/7ebdd4ee-8996-4dcd-95fc-57d640614514" />
+<img width="544" height="1175" alt="6d36ffb8bc3fddb5b549f1f33a8c2c86" src="https://github.com/user-attachments/assets/1388c39e-c504-4249-b0fc-43531b5be0e3" />
+<img width="548" height="1172" alt="12031734e7183c116f996ec61d42b7ba" src="https://github.com/user-attachments/assets/dfc869c5-22f8-4f3f-a96f-344c832c2e88" />
+
